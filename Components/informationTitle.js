@@ -323,6 +323,7 @@ class InfoTitle extends React.Component {
                 <View>
                     <Text style= {styles.sectionText}> Họ và Tên
                     <Text style= {styles.redText}> * </Text>
+                    :
                     </Text>
                     <TextInput
                         placeholder = "Nhập tên của bạn"
@@ -450,6 +451,13 @@ class InfoTitle extends React.Component {
                         })}
                     />
                 </View>
+                
+                
+                <Text style={{fontSize: 14, marginLeft: 15, marginRight: 10, paddingTop: 25, paddingBottom: 10}}>
+                <Text style={styles.redText}>* </Text>
+                Tôi xin đảm bảo thông tin đã khai báo là chính xác và xin chịu trách nhiệm trước pháp luật về những gì mình đã điền!
+                <Text style={styles.redText}> *</Text>
+                </Text>
                 
                 {/* Nút lưu dữ liệu */}
                 <Text></Text>
