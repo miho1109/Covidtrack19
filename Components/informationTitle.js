@@ -15,15 +15,16 @@ import GPS from './GPS';
 class InfoTitle extends React.Component {
 
     state = {
-        gender: '',
-        region: '',
+        gender: 0,
+        region: 0,
+        city: 'Thành phố',
+        district: 'Quận',
         name: '',
         id: '',
         insurance: '',
         address: '',
         dob: new Date(1598051730000),
         email: '',
-        abc: 'Alo',
 
         countryList: [
             "Việt Nam",
@@ -277,6 +278,32 @@ class InfoTitle extends React.Component {
             "Åland Islands"
         ],
 
+        cityList: [
+            "Thành phố",
+            "Hà Nội",
+        ],
+
+        districtList: [
+            "Quận",
+            "Ba Đình",
+            "Hoàn Kiếm",
+            "Tây Hồ",
+            "Long Biên",
+            "Cầu Giấy",
+            "Đống Đa",
+            "Hai Bà Trưng",
+            "Hoàng Mai",
+            "Thanh Xuân",
+            "Sóc Sơn",
+            "Đông Anh",
+            "Gia Lâm",
+            "Nam Từ Liêm",
+            "Thanh Trì",
+            "Bắc Từ Liêm",
+            "Mê Linh",
+            "Hà Đông",
+        ],
+
         genderList: [
             "Nam",
             "Nữ",
@@ -292,6 +319,8 @@ class InfoTitle extends React.Component {
  
     saveInfo() {
         firestore()
+        .collection("Hà Nội")
+        .doc(this.state.districtList[this.state.district])
         .collection("SuspectedUser")
         .add({
             Name: this.state.name,
@@ -370,14 +399,6 @@ class InfoTitle extends React.Component {
                     <Text style= {styles.redText}> * </Text>
                     :
                     </Text>
-                    {/* <TextInput
-                        placeholder = "DD/MM/YYYY"
-                        style={styles.sectionInput}
-                        onChangeText={text => this.setState({
-                            dob: text
-                        })}
-                         
-                    /> */}
                     <DatePicker 
                         date={this.state.dob}
                         changeDate = {this.changeDateOfBirth.bind(this)}/>
@@ -412,9 +433,11 @@ class InfoTitle extends React.Component {
                     <Picker
                         selectedValue={this.state.region}
                         style={styles.countryPicker}
-                        onValueChange={(itemValue, itemPosition) => this.setState({
-                            region: itemValue
-                        })}
+                        onValueChange={(itemValue, itemPosition) => {
+                            this.setState({
+                                region: itemValue
+                            })
+                        }}
                     >
                         {this.state.countryList.map((item, index) => {
                             return (< Picker.Item label={item} value={index} key={index} />);
@@ -428,6 +451,36 @@ class InfoTitle extends React.Component {
                     <Text style= {styles.redText}> * </Text>
                     :
                     </Text>
+                    <Picker
+                        selectedValue={this.state.city}
+                        style={styles.countryPicker}
+                        onValueChange={(itemValue, itemPosition) => {
+                                this.setState({
+                                    city: itemValue
+                                })
+                            }
+                        }
+                    >
+                        {this.state.cityList.map((item, index) => {
+                            return (< Picker.Item label={item} value={index} key={index} />);
+                        })}
+                    </Picker>
+
+                    <Picker
+                        selectedValue={this.state.district}
+                        style={styles.countryPicker}
+                        onValueChange={(itemValue, itemPosition) => {
+                                this.setState({
+                                    district: itemValue
+                                })
+                            }
+                        }
+                    >
+                        {this.state.districtList.map((item, index) => {
+                            return (< Picker.Item label={item} value={index} key={index} />);
+                        })}
+                    </Picker>
+
                     <TextInput
                         placeholder = "Nhập địa chỉ cách li của bạn"
                         style={styles.sectionInput}
@@ -465,7 +518,7 @@ class InfoTitle extends React.Component {
                     style={styles.saveButton} 
                     onPress={() => this.saveInfo()}>
                         <Text 
-                        style={{color: "white", alignSelf: "center", fontSize: 20}}> 
+                        style={{color: "white", alignSelf: "center", fontSize: 25, paddingTop: 6}}> 
                         Lưu
                         </Text>
                 </TouchableOpacity>
@@ -517,6 +570,7 @@ const styles = StyleSheet.create({
     },
     saveButton: {
         backgroundColor: "darkslateblue",
+        paddingBottom: 10,
     },
 })
 

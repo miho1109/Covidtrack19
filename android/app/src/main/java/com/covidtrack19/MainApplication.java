@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.reactnativecommunity.picker.RNCPickerPackage;

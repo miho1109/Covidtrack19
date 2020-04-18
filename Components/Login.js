@@ -13,28 +13,28 @@ export default class LogInInterface extends Component {
 
 
     logIn(){
-      firestore().collection("Supervisor").doc(this.state.PIN)
-      .get().then (doc => {
-         if(doc.exists) {
-            this.setState({
-               page: 'supervisorUI'
-            })
-         }
-         else
-         {
-            firestore().collection("SuspectedUser").doc(this.state.PIN)
-            .get().then (doc => {
-               if(doc.exists) {
-                  this.setState({
-                     page: 'userInterface'
-                  })
-               }
-               else{
-                  Alert.alert("Bạn nhập sai mã PIN")
-               }
-            })
-         }
-      })
+        firestore().collection("Supervisor").doc(this.state.PIN)
+        .get().then (doc => {
+            if(doc.exists) {
+                this.setState({
+                page: 'supervisorUI'
+                })
+            }
+            else
+            {
+                firestore().collection("SuspectedUser").doc(this.state.PIN)
+                .get().then (doc => {
+                if(doc.exists) {
+                    this.setState({
+                        page: 'userInterface'
+                    })
+                }
+                else{
+                    Alert.alert("Bạn nhập sai mã PIN")
+                }
+                })
+            }
+        })
     }
 
 
@@ -51,7 +51,7 @@ export default class LogInInterface extends Component {
 
     return (
         <View style = {styles.view}  >
-            <ImageBackground source={{uri:"https://i.imgur.com/7U6ecIt.jpg"}} style={styles.image}>
+            <ImageBackground source={require('../Resources/Background.jpg')} style={styles.image}>
                 <Text style = {styles.text}>
                     Covid19-Tracker
                 </Text>

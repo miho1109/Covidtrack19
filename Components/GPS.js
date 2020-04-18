@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
-    Text,
     View,
-    BackHandler,
     DeviceEventEmitter
 } from 'react-native';
 
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
+import Geolocation from "react-native-geolocation-service"
 
 export default class GPS extends React.Component {
     state = {
@@ -27,8 +25,9 @@ export default class GPS extends React.Component {
             providerListener: true // true ==> Trigger "locationProviderStatusChange" listener when the location state changes
         }).then(function(success) {
             // success => {alreadyEnabled: true, enabled: true, status: "enabled"} 
-                navigator.geolocation.getCurrentPosition((position) => {
+                Geolocation.getCurrentPosition((position) => {
                     let initialPosition = JSON.stringify(position);
+                    console.log(position);
                     this.setState({ initialPosition });
                 }, error => console.log(error), { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
             }.bind(this)

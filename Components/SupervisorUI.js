@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Alert } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default class SupervisorUI extends Component{
 

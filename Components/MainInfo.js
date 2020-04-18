@@ -14,7 +14,6 @@ import {
   View,
   Text,
   StatusBar,
-  TextInput,
 } from 'react-native';
 
 import InfoTitle, {saveInfo} from './informationTitle';

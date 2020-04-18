@@ -16,7 +16,8 @@
     "@react-native-firebase/firestore": "^6.4.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-android-location-services-dialog-box": "^2.8.2"
+    "react-native-android-location-services-dialog-box": "^2.8.2",
+    "react-native-geolocation-service": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
