@@ -5,26 +5,36 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from './DatePicker';
 import GPS from './GPS';
+import Timer from './Timer';
+import moment from 'moment';
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
 class InfoTitle extends React.Component {
-
+    
     state = {
+        page: 'informationTitle',
         gender: 0,
         region: 0,
         city: 'Thành phố',
         district: 'Quận',
+        province: 'Phường',
+        chosenProvince: ["Phường"],
         name: '',
         id: '',
         insurance: '',
         address: '',
         dob: new Date(1598051730000),
         email: '',
+        currentDate: date,
 
         countryList: [
             "Việt Nam",
@@ -304,6 +314,310 @@ class InfoTitle extends React.Component {
             "Hà Đông",
         ],
 
+        baDinhProvince: [
+            "Cống Vị",
+            "Điện Biên",
+            "Đội Cấn",
+            "Giảng Võ",
+            "Kim Mã",
+            "Liễu Giai",
+            "Ngọc Hà",
+            "Ngọc Khánh",
+            "Nguyễn Trung Trực",
+            "Phúc Xá",
+            "Quán Thánh",
+            "Thành Công",
+            "Trúc Bạch",
+            "Vĩnh Phúc",
+        ],
+
+        hoanKiemProvince: [
+            "Chương Dương",
+            "Cửa Đông",
+            "Cửa Nam",
+            "Đồng Xuân",
+            "Hàng Bạc",
+            "Hàng Bài",
+            "Hàng Bồ",
+            "Hàng Bông",
+            "Hàng Buồm",
+            "Hàng Đào",
+            "Hàng Gai",
+            "Hàng Mã",
+            "Hàng Trống",
+            "Lý Thái Tổ",
+            "Phan Chu Trinh",
+            "Phúc Tân",
+            "Tràng Tiền",
+            "Trần Hưng Đạo",
+        ],
+
+        tayHoProvince: [
+            "Bưởi",
+            "Nhật Tân",
+            "Phú Thượng",
+            "Quảng An",
+            "Thụy Khuê",
+            "Tứ Liên",
+            "Xuân La",
+            "Yên Phụ",
+        ],
+
+        longBienProvince: [
+            "Bồ Đề",
+            "Cự Khối",
+            "Đức Giang",
+            "Gia Thụy",
+            "Giang Biên",
+            "Long Biên",
+            "Ngọc Lâm",
+            "Ngọc Thụy",
+            "Phúc Đồng",
+            "Phúc Lợi",
+            "Sài Đồng",
+            "Thạch Bàn",
+            "Thượng Thanh",
+            "Việt Hưng",            
+        ],
+
+        cauGiayProvince: [
+            "Dịch Vọng",
+            "Dịch Vọng Hậu",
+            "Mai Dịch",
+            "Nghĩa Đô",
+            "Nghĩa Tân",
+            "Quan Hoa",
+            "Trung Hòa",
+            "Yên Hòa",
+        ],
+
+        dongDaProvince: [
+            "Cát Linh",
+            "Hàng Bột",
+            "Khâm Thiên",
+            "Khương Thượng",
+            "Kim Liên",
+            "Láng Hạ",
+            "Láng Thượng",
+            "Nam Đồng",
+            "Ngã Tư Sở",
+            "Ô Chợ Dừa",
+            "Phương Liên",
+            "Phương Mai",
+            "Quang Trung",
+            "Quốc Tử Giám",
+            "Thịnh Quang",
+            "Thổ Quan",
+            "Trung Liệt",
+            "Trung Phụng",
+            "Trung Tự",
+            "Văn Chương",
+            "Văn Miếu",
+        ],
+
+        haiBaTrungProvince: [
+            "Hạ Đình",
+            "Khương Đình",
+            "Khương Mai",
+            "Khương Trung",
+            "Kim Giang",
+            "Nhân Chính",
+            "Phương Liệt",
+            "Thanh Xuân Bắc",
+            "Thanh Xuân Nam",
+            "Thanh Xuân Trung",
+            "Thượng Đình",
+        ],
+
+        hoangMaiProvince: [
+            "Đại Kim",
+            "Định Công",
+            "Giáp Bát",
+            "Hoàng Liệt",
+            "Hoàng Văn Thụ",
+            "Lĩnh Nam",
+            "Mai Động",
+            "Tân Mai",
+            "Thanh Trì",
+            "Thịnh Liệt",
+            "Trần Phú",
+            "Tương Mai",
+            "Vĩnh Hưng",
+            "Yên Sở",
+        ],
+
+        thanhXuanProvince: [
+            "Hạ Đình",
+            "Khương Đình",
+            "Khương Mai",
+            "Khương Trung",
+            "Kim Giang",
+            "Nhân Chính",
+            "Phương Liệt",
+            "Thanh Xuân Bắc",
+            "Thanh Xuân Nam",
+            "Thanh Xuân Trung",
+            "Thượng Đình",
+        ],
+
+        socSonProvince: [
+            " Bắc Phú",
+            " Bắc Sơn",
+            " Đông Xuân",
+            " Đức Hòa",
+            " Hiền Ninh",
+            " Hồng Kỳ",
+            " Kim Lũ",
+            " Mai Đình",
+            " Minh Phú",
+            " Minh Trí",
+            " Nam Sơn",
+            " Phú Cường",
+            " Phù Linh",
+            " Phù Lỗ",
+            " Phú Minh",
+            " Quang Tiến",
+            " Tân Dân",
+            " Tân Hưng",
+            " Tân Minh",
+            " Thanh Xuân",
+            " Tiên Dược",
+            " Trung Giã",
+            " Việt Long",
+            " Xuân Giang",
+            " Xuân Thu",
+        ],
+
+        dongAnhProvince: [
+            "Bắc Hồng",
+            "Cổ Loa",
+            "Dục Tú",
+            "Đại Mạch",
+            "Đông Hội",
+            "Hải Bối",
+            "Kim Chung",
+            "Kim Nỗ",
+            "Liên Hà",
+            "Mai Lâm",
+            "Nam Hồng",
+            "Nguyên Khê",
+            "Tàm Xá",
+            "Thụy Lâm",
+            "Tiên Dương",
+            "Uy Nỗ",
+            "Vân Hà",
+            "Vân Nội",
+            "Việt Hùng",
+            "Vĩnh Ngọc",
+            "Võng La",
+            "Xuân Canh",
+            "Xuân Nộn",
+        ],
+
+        giaLamProvince: [
+            "Hồng Tiến (Bồ Đề)",
+            "Việt Hưng",
+            "Long Biên",
+            "Ngọc Thụy",
+            "Thượng Thanh",
+            "Tiến Bộ (Gia Thụy)",
+            "Giang Biên",
+            "Phúc Lợi (Hội Xá)",
+            "Trung Thành (Cổ Bi)",
+            "Thạch Bàn",
+            "Quyết Chiến (Phú Thị)",
+            "Quyết Thắng (Kim Sơn)",
+            "Toàn Thắng (Lệ Chi)",
+            "Tân Hưng (Kiêu Kỵ)",
+            "Kim Lan",
+            "Quang Minh (Bát Tràng)",
+            "Thừa Thiên (Đông Dư)",
+            "Cự Khối",
+            "Quang Trung I (Trâu Quỳ)",
+            "Quang Trung II (Yên Thường)",
+            "Quyết Tiến (Đặng Xá)",
+            "Văn Đức",
+            "Phù Đổng",
+            "Trung Hưng (Trung Màu)",
+            "Tiền Phong (Yên Viên)",
+            "Đình Xuyên", 
+            "Dương Hà",
+            "Ninh Hiệp",
+            "Đức Thắng (Dương Xá)",
+            "Chiến Thắng (Dương Quang)",
+            "Đại Hưng (Đa Tốn)",
+        ],
+
+        namTuLiemProvince: [
+            "Cầu Diễn",
+            "Đại Mỗ",
+            "Mễ Trì",
+            "Mỹ Đình 1",
+            "Mỹ Đình 2",
+            "Phú Đô",
+            "Phương Canh",
+            "Tây Mỗ",
+            "Trung Văn",
+            "Xuân Phương",
+        ],
+
+        bacTuLiemProvince: [
+            "Cổ Nhuế 1",
+            "Cổ Nhuế 2",
+            "Đông Ngạc",
+            "Đức Thắng",
+            "Liên Mạc",
+            "Minh Khai",
+            "Phú Diễn",
+            "Phúc Diễn",
+            "Tây Tựu",
+            "Thụy Phương",
+            "Thượng Cát",
+            "Xuân Đỉnh",
+            "Xuân Tảo",
+        ],
+
+        meLinhProvince: [
+            "Chi Đông",
+            "Chu Phan",
+            "Đại Thịnh",
+            "Hoàng Kim",
+            "Kim Hoa",
+            "Liên Mạc",
+            "Mê Linh",
+            "Quang Minh",
+            "Tam Đồng",
+            "Thạch Đà",
+            "Thanh Lâm",
+            "Tiền Phong",
+            "Tiến Thắng",
+            "Tiến Thịnh",
+            "Tráng Việt",
+            "Tự Lập",
+            "Vạn Yên",
+            "Văn Khê",
+        ],
+
+        haDongProvince: [
+            "Biên Giang",
+            "Dương Nội",
+            "Đồng Mai",
+            "Hà Cầu",
+            "Kiến Hưng",
+            "La Khê",
+            "Mộ Lao",
+            "Nguyễn Trãi",
+            "Phú La",
+            "Phú Lãm",
+            "Phú Lương",
+            "Phúc La",
+            "Quang Trung",
+            "Vạn Phúc",
+            "Văn Quán",
+            "Yên Nghĩa",
+            "Yết Kiêu",
+        ],
+
         genderList: [
             "Nam",
             "Nữ",
@@ -316,37 +630,63 @@ class InfoTitle extends React.Component {
         })
         console.log(this.state.dob)
     }
- 
+
     saveInfo() {
         firestore()
         .collection("Hà Nội")
         .doc(this.state.districtList[this.state.district])
+        .collection(this.state.chosenProvince[this.state.province])
+        .doc("Supervisor")
         .collection("SuspectedUser")
-        .add({
+        .doc(this.state.name)
+        .set({
             Name: this.state.name,
             CMND: this.state.id,
             Insurance: this.state.insurance,
             DateOfBirth: this.state.dob,
             Gender: this.state.genderList[this.state.gender],
             Region: this.state.countryList[this.state.region],
+            District: this.state.districtList[this.state.district],
+            Province: this.state.chosenProvince[this.state.province],
             QuarantineLocation: this.state.address,
             Email: this.state.email,
+            currentDate: this.state.currentDate,
         })
         .then(() => {
+            this.setState({
+                page: 'Timer'
+                })
             console.log('User added!');
         });
     }
+
 
     checkInputLength(text) {
         if(text.trim().length < 2){
             Alert.alert('Xin mời nhập lại !')
         }
     }
-
+    
     render() {
+        if(this.state.page == 'Timer')
+        {   
+            var district = this.state.districtList[this.state.district];
+            var province = this.state.chosenProvince[this.state.province];
+            return(<Timer district={district} 
+                province={province} 
+                name={this.state.name}/>)
+        }
+        
         return (
+            
+            <ScrollView>
             <View>
                 <GPS/>
+                <View style={styles.sectionContainer}>
+                    <Text style={styles.sectionTitle}>
+                        Thông tin cá nhân
+                    </Text>
+                </View>
                 
                 {/* Cột nhập tên */}
                 <View>
@@ -451,6 +791,8 @@ class InfoTitle extends React.Component {
                     <Text style= {styles.redText}> * </Text>
                     :
                     </Text>
+
+                    {/* Picker của thành phố */}
                     <Picker
                         selectedValue={this.state.city}
                         style={styles.countryPicker}
@@ -465,7 +807,8 @@ class InfoTitle extends React.Component {
                             return (< Picker.Item label={item} value={index} key={index} />);
                         })}
                     </Picker>
-
+                    
+                    {/* Picker của quận */}
                     <Picker
                         selectedValue={this.state.district}
                         style={styles.countryPicker}
@@ -473,6 +816,59 @@ class InfoTitle extends React.Component {
                                 this.setState({
                                     district: itemValue
                                 })
+                                switch(itemValue) {
+                                    case 1:
+                                        this.state.chosenProvince = this.state.baDinhProvince;
+                                        break;
+                                    case 2:
+                                        this.state.chosenProvince = this.state.hoanKiemProvince;
+                                        break;
+                                    case 3:
+                                        this.state.chosenProvince = this.state.tayHoProvince;
+                                        break;
+                                    case 4:
+                                        this.state.chosenProvince = this.state.longBienProvince;
+                                        break;
+                                    case 5:
+                                        this.state.chosenProvince = this.state.cauGiayProvince;
+                                        break;
+                                    case 6:
+                                        this.state.chosenProvince = this.state.dongDaProvince;
+                                        break;
+                                    case 7:
+                                        this.state.chosenProvince = this.state.haiBaTrungProvince;
+                                        break;
+                                    case 8:
+                                        this.state.chosenProvince = this.state.hoangMaiProvince;
+                                        break;
+                                    case 9:
+                                        this.state.chosenProvince = this.state.thanhXuanProvince;
+                                        break;
+                                    case 10:
+                                        this.state.chosenProvince = this.state.socSonProvince;
+                                        break;
+                                    case 11:
+                                        this.state.chosenProvince = this.state.dongAnhProvince;
+                                        break;
+                                    case 12:
+                                        this.state.chosenProvince = this.state.giaLamProvince;
+                                        break;
+                                    case 13:
+                                        this.state.chosenProvince = this.state.namTuLiemProvince;
+                                        break;
+                                    case 14:
+                                        this.state.chosenProvince = this.state.bacTuLiemProvince;
+                                        break;
+                                    case 15:
+                                        this.state.chosenProvince = this.state.meLinhProvince;
+                                        break;
+                                    case 16:
+                                        this.state.chosenProvince = this.state.haDongProvince;
+                                        break;
+                                    default:
+                                        //this.state.chosenProvince = ['xin moi chon quan']
+                                        break;
+                                }
                             }
                         }
                     >
@@ -480,9 +876,25 @@ class InfoTitle extends React.Component {
                             return (< Picker.Item label={item} value={index} key={index} />);
                         })}
                     </Picker>
+                        
+                    {/* Picker của phường */}
+                    <Picker
+                        selectedValue={this.state.province}
+                        style={styles.countryPicker}
+                        onValueChange={(itemValue, itemPosition) => {
+                                this.setState({
+                                    province: itemValue
+                                })
+                            }
+                        }
+                    >
+                        {this.state.chosenProvince.map((item, index) => {
+                            return (< Picker.Item label={item} value={index} key={index} />);
+                        })}
+                    </Picker>
 
                     <TextInput
-                        placeholder = "Nhập địa chỉ cách li của bạn"
+                        placeholder = "Nhập địa chỉ cách li cụ thể của bạn"
                         style={styles.sectionInput}
                         onChangeText={text => this.setState({
                             address: text
@@ -516,7 +928,10 @@ class InfoTitle extends React.Component {
                 <Text></Text>
                 <TouchableOpacity 
                     style={styles.saveButton} 
-                    onPress={() => this.saveInfo()}>
+                   
+                    onPress={() => {
+                        this.saveInfo()
+                        }}>
                         <Text 
                         style={{color: "white", alignSelf: "center", fontSize: 25, paddingTop: 6}}> 
                         Lưu
@@ -524,6 +939,7 @@ class InfoTitle extends React.Component {
                 </TouchableOpacity>
 
             </View>
+            </ScrollView>
             );
     }
 
@@ -572,6 +988,21 @@ const styles = StyleSheet.create({
         backgroundColor: "darkslateblue",
         paddingBottom: 10,
     },
+    sectionContainer: {
+        backgroundColor: 'darkslateblue',
+        paddingHorizontal: 24,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      sectionTitle: {
+        paddingBottom: 10,
+        marginTop: 10,
+        fontSize: 24,
+        fontWeight: '600',
+        color: "white",
+      },  
 })
 
 export default InfoTitle;

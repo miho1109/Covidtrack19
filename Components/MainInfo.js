@@ -26,9 +26,9 @@ const MainInfo = () => {
       <SafeAreaView>
         <ScrollView>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>
+            {/* <Text style={styles.sectionTitle}>
               Thông tin cá nhân
-            </Text>
+            </Text> */}
           </View>
           <InfoTitle/> 
         </ScrollView>
