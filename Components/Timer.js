@@ -5,6 +5,7 @@ import {
     View,
     StyleSheet,
     Alert,
+    Image,
 }
 from 'react-native';
 
@@ -57,6 +58,7 @@ export default class Timer extends React.Component {
                 this.setTime();
             }
         })
+
     }
 
     onDoneCountdown () {
@@ -98,6 +100,13 @@ export default class Timer extends React.Component {
                       timeLabels={{d: 'Ngày', h: 'Giờ', m: 'Phút', s: 'Giây'}}
                 />
 
+                <Image 
+                  source={require('../Resources/Countdown.gif')}
+                  style={{
+                    aspectRatio: 0.8, 
+                    resizeMode: 'contain',
+                  }}
+                />
             </View>
         );
       }
@@ -112,13 +121,13 @@ export default class Timer extends React.Component {
   }
   const styles = StyleSheet.create({
 
-      sectionTitle: {
-        paddingBottom: 10,
-        marginTop: 10,
-        fontSize: 24,
-        fontWeight: '600',
-        color: "black",
-      }, 
+    sectionTitle: {
+      paddingBottom: 10,
+      marginTop: 10,
+      fontSize: 24,
+      fontWeight: '600',
+      color: "black",
+    }, 
 
     MainContainer: {
         flex: 1,

@@ -10,6 +10,7 @@ import {
 
 import {Picker} from '@react-native-community/picker';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-community/async-storage';
 import DatePicker from './DatePicker';
 import GPS from './GPS';
 import Timer from './Timer';
@@ -658,6 +659,12 @@ class InfoTitle extends React.Component {
                 })
             console.log('User added!');
         });
+
+        const firstPair = ["ID", this.state.name]
+        const secondPair = ["District", this.state.districtList[this.state.district]]
+        const thirdPair = ["Province", this.state.chosenProvince[this.state.province]]
+        AsyncStorage.multiSet([firstPair, secondPair, thirdPair])
+        console.log("Save successful.")
     }
 
 
@@ -672,9 +679,12 @@ class InfoTitle extends React.Component {
         {   
             var district = this.state.districtList[this.state.district];
             var province = this.state.chosenProvince[this.state.province];
-            return(<Timer district={district} 
+            return(<Timer 
+                district={district} 
                 province={province} 
-                name={this.state.name}/>)
+                name={this.state.name}
+                />
+            )
         }
         
         return (

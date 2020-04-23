@@ -202,6 +202,9 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
+    // For animated GIF support
+    implementation 'com.facebook.fresco:animated-gif:2.0.0'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
