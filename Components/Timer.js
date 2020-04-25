@@ -12,6 +12,7 @@ from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import moment from 'moment';
 import firestore from '@react-native-firebase/firestore'
+import GPS from './GPS'
 
 export default class Timer extends React.Component {
 
@@ -23,6 +24,8 @@ export default class Timer extends React.Component {
           district: props.district,
           currentDate: 'Null',
           second: 0,
+          originalLat: props.originalLat,
+          originalLong: props.originalLong,
       }
     }
 
@@ -74,13 +77,16 @@ export default class Timer extends React.Component {
     }
     
     render() {
-      console.log("date ", this.state.currentDate)
-      console.log("second", this.state.second)
-
+      // console.log("date ", this.state.currentDate)
+      // console.log("second", this.state.second)
+      
       if(this.state.second != 0) {
-        return (
+        return (        
           <View style={styles.MainContainer}>
-            
+            < GPS
+                originalLat={this.state.originalLat}
+                originalLong={this.state.originalLong}
+            /> 
                 <Text style={styles.sectionTitle}>
                     Thời gian cách li còn lại của bạn
                 </Text>
@@ -133,7 +139,8 @@ export default class Timer extends React.Component {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 210
+        paddingTop: 30,
+        backgroundColor: "white",
     },
 
     countDownStyle: {

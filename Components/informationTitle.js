@@ -11,6 +11,7 @@ import {
 import {Picker} from '@react-native-community/picker';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-community/async-storage';
+import Geolocation from "react-native-geolocation-service"
 import DatePicker from './DatePicker';
 import GPS from './GPS';
 import Timer from './Timer';
@@ -36,6 +37,8 @@ class InfoTitle extends React.Component {
         dob: new Date(1598051730000),
         email: '',
         currentDate: date,
+        originalLat: '',
+        originalLong: '',
 
         countryList: [
             "Việt Nam",
@@ -625,6 +628,20 @@ class InfoTitle extends React.Component {
         ],
     }
 
+    componentDidMount() {
+        this.getUserLocation();
+    }
+
+    getUserLocation() {
+        Geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    originalLong: position.coords.longitude.toString(),
+                    originalLat: position.coords.latitude.toString(),
+                })
+            })
+    }
+
     changeDateOfBirth(Date){
         this.setState({
             dob: Date,
@@ -633,6 +650,7 @@ class InfoTitle extends React.Component {
     }
 
     saveInfo() {
+
         firestore()
         .collection("Hà Nội")
         .doc(this.state.districtList[this.state.district])
@@ -657,13 +675,15 @@ class InfoTitle extends React.Component {
             this.setState({
                 page: 'Timer'
                 })
-            console.log('User added!');
         });
 
         const firstPair = ["ID", this.state.name]
         const secondPair = ["District", this.state.districtList[this.state.district]]
         const thirdPair = ["Province", this.state.chosenProvince[this.state.province]]
-        AsyncStorage.multiSet([firstPair, secondPair, thirdPair])
+        const forthPair = ["OriginalLatitude", this.state.originalLat]
+        const fifthPair = ["OriginalLongtitude", this.state.originalLong]
+        AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair])
+        
         console.log("Save successful.")
     }
 
@@ -683,6 +703,8 @@ class InfoTitle extends React.Component {
                 district={district} 
                 province={province} 
                 name={this.state.name}
+                originalLat={this.state.originalLat}
+                originalLong={this.state.originalLong}
                 />
             )
         }
@@ -691,7 +713,7 @@ class InfoTitle extends React.Component {
             
             <ScrollView>
             <View>
-                <GPS/>
+              
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}>
                         Thông tin cá nhân
