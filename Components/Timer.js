@@ -140,7 +140,7 @@ export default class Timer extends React.Component {
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: 30,
-        backgroundColor: "white",
+        backgroundColor: "beige",
     },
 
     countDownStyle: {
