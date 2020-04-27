@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
@@ -53,7 +52,6 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-    BackgroundTaskPackage.useContext(this);
   }
 
   /**

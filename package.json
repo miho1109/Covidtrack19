@@ -19,7 +19,6 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-android-location-services-dialog-box": "^2.8.2",
-    "react-native-background-task": "^0.2.1",
     "react-native-countdown-component": "^2.7.1",
     "react-native-geolocation-service": "^4.0.0"
   },
