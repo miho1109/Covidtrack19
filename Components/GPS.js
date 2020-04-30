@@ -8,8 +8,9 @@ import {
 
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
 import Geolocation from "react-native-geolocation-service"
+import NotifService from './Notification';
 
-var distanceFromHome= 0;
+var notif = new NotifService;
 
 export default class GPS extends React.Component {
     constructor(props) {
@@ -19,10 +20,31 @@ export default class GPS extends React.Component {
             Lat: props.originalLat,
             originalLong: props.originalLong,
             originalLat: props.originalLat,
+            distanceFromHome: 0,
         };
     }
-    
 
+    onRegister(token) {
+        Alert.alert('Registered !', JSON.stringify(token));
+        //console.log(token);
+        this.setState({registerToken: token.token, fcmRegistered: true});
+      }
+    
+    onNotif(notif) {
+        //console.log(notif);
+        Alert.alert(notif.title, notif.message);
+    }
+    
+    createNotification() {
+        notif = new NotifService (
+            this.onRegister.bind(this),
+            this.onNotif.bind(this),
+            "Cảnh báo!",
+            "Xin hãy về nhà!" + "\n" + "Bạn đang cách khu cách ly: " + Math.round(this.state.distanceFromHome) + "m",
+            "Xin hãy về nhà!" + "\n" + "Bạn đang cách khu cách ly: " + Math.round(this.state.distanceFromHome) + "m",
+        );
+    }
+    
     componentDidMount() {
         LocationServicesDialogBox.checkLocationServicesIsEnabled({
             message: "<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
@@ -43,11 +65,13 @@ export default class GPS extends React.Component {
                     })
                     // console.log("originalLong: " , this.state.originalLong," ", "originalLat:  " ,this.state.originalLat);
                     // console.log(this.state.Long, this.state.Lat);
+                    
+                    this.checkLocation();
                 },
                 (error) => {
                     console.log(error.code, error.message);
                 },
-                { enableHighAccuracy: true, /*timeout: 1500, maximumAge: 10000,*/ showLocationDialog: true, fastestInterval: 2000, distanceFilter: 2}
+                { enableHighAccuracy: true, forceRequestLocation: true, timeout: 1500, maximumAge: 5000, showLocationDialog: true, fastestInterval: 2000, distanceFilter: 2}
             );
             }.bind(this)    
         ).catch((error) => {
@@ -55,7 +79,11 @@ export default class GPS extends React.Component {
         });
         
         DeviceEventEmitter.addListener('locationProviderStatusChange', function(status) { 
-            console.log(status); 
+            console.log(status);
+            let a = JSON.stringify(status);
+            if(a.slice(11,16) == "false") {
+                Alert.alert("Vui lòng bật lại GPS, làm ơn !!!")
+            } 
         });
     }
     
@@ -78,12 +106,17 @@ export default class GPS extends React.Component {
                 Math.sin(Δλ/2) * Math.sin(Δλ/2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        distanceFromHome = R * c;
-        console.log("Distance From Home: ", distanceFromHome);
+        this.setState({
+            distanceFromHome: R * c
+        })
         
-        if(distanceFromHome > 20){
-            
-            Alert.alert('Bạn đang đi quá xa khỏi nơi cách ly!')
+        console.log("Distance From Home: ", this.state.distanceFromHome);
+        
+        if(this.state.distanceFromHome > 10){
+            this.createNotification();
+            notif.cancelAll();
+            notif.localNotif();
+            //Alert.alert('Bạn đang đi quá xa khỏi nơi cách ly!')
         }
     }
 
@@ -97,7 +130,10 @@ export default class GPS extends React.Component {
                 <Text>
                     Origin: {this.state.originalLong} {this.state.originalLat}
                 </Text> */}
-               { this.checkLocation() } 
+               {/* { this.checkLocation() }  */}
+               <Text>
+                   Khoảng cách khỏi nhà: {Math.round(this.state.distanceFromHome)}m
+               </Text>
             </View>
         );
     }

@@ -34,7 +34,7 @@ export default class Timer extends React.Component {
     }
 
     setTime () {
-      var a = moment(this.state.currentDate, "YYYY-MM-DD");
+      var a = moment(this.state.currentDate, "YYYY-MM-DD HH:mm:ss");
       var b = a.clone().add(2, 'week');
       var c = moment();
       var duration = moment.duration(b.diff(c));

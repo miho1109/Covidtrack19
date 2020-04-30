@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet} from "react-native";
+import {StyleSheet, PermissionsAndroid} from "react-native";
 import LogInInterface from './Components/Login';
 import MainInfo from './Components/MainInfo'
 import GPS from './Components/GPS'
@@ -32,6 +32,18 @@ export default class App extends React.Component {
         }
 
         //await AsyncStorage.clear()
+
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+                title: "Covid19-Tracker Permission",
+                message:
+                    "Covid19-Tracker needs access to your location " ,
+                buttonNeutral: "Ask Me Later",
+                //buttonNegative: "Cancel",
+                buttonPositive: "OK"
+            }
+          );
     }
 
     componentDidMount() {
@@ -55,6 +67,7 @@ export default class App extends React.Component {
         return (
             <LogInInterface/>
         );
+        //return <TestNoti/>
     }
 };
 

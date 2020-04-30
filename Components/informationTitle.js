@@ -18,7 +18,8 @@ import Timer from './Timer';
 import moment from 'moment';
 
 var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' '+ today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+
 
 class InfoTitle extends React.Component {
     
@@ -669,7 +670,9 @@ class InfoTitle extends React.Component {
             Province: this.state.chosenProvince[this.state.province],
             QuarantineLocation: this.state.address,
             Email: this.state.email,
-            currentDate: this.state.currentDate,
+            CurrentDate: this.state.currentDate,
+            Longtitude: this.state.originalLong,
+            Latitude: this.state.originalLat,
         })
         .then(() => {
             this.setState({
