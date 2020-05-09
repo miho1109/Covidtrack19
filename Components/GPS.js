@@ -71,7 +71,7 @@ export default class GPS extends React.Component {
                 (error) => {
                     console.log(error.code, error.message);
                 },
-                { enableHighAccuracy: true, forceRequestLocation: true, timeout: 1500, maximumAge: 5000, showLocationDialog: true, fastestInterval: 2000, distanceFilter: 2}
+                { enableHighAccuracy: true, forceRequestLocation: true, timeout: 1500, maximumAge: 5000, showLocationDialog: true, fastestInterval: 10, distanceFilter: 1}
             );
             }.bind(this)    
         ).catch((error) => {
@@ -123,7 +123,7 @@ export default class GPS extends React.Component {
     render() {
 
         return (
-            <View>
+            <View style={{paddingTop:50, alignSelf: "center"}}>
                 {/* <Text>
                     Geolocation: {this.state.Long} {this.state.Lat}
                 </Text>

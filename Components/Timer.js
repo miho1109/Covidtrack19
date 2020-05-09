@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Alert,
     Image,
+    ImageBackground
 }
 from 'react-native';
 
@@ -22,10 +23,10 @@ export default class Timer extends React.Component {
           name: props.name,
           province: props.province,
           district: props.district,
-          currentDate: 'Null',
-          second: 0,
           originalLat: props.originalLat,
           originalLong: props.originalLong,
+          currentDate: 'Null',
+          second: 0,
       }
     }
 
@@ -56,7 +57,7 @@ export default class Timer extends React.Component {
             if(doc.exists) {
                 var data = doc.data();
                 this.setState({
-                    currentDate: data.currentDate,
+                    currentDate: data.CurrentDate,
                 })
                 this.setTime();
             }
@@ -83,37 +84,41 @@ export default class Timer extends React.Component {
       if(this.state.second != 0) {
         return (        
           <View style={styles.MainContainer}>
-            < GPS
+            <ImageBackground source={require('../Resources/CountdownBackground.jpg')} style={styles.image}>
+              < GPS
                 originalLat={this.state.originalLat}
                 originalLong={this.state.originalLong}
-            /> 
-                <Text style={styles.sectionTitle}>
-                    Thời gian cách li còn lại của bạn
-                </Text>
-                
-                <CountDown 
-                      style={styles.countDownStyle}
-                      until={this.state.second}
-                      onFinish={
-                        this.onDoneCountdown
-                      }
-                      onPress={
-                        this.onPressCountdown
-                      }
-                      size={30}
-                      digitStyle={{backgroundColor: '#602dc4'}}
-                      digitTxtStyle={{color: '#FFF'}}
-                      timeLabels={{d: 'Ngày', h: 'Giờ', m: 'Phút', s: 'Giây'}}
-                />
+              /> 
+              
+              <Text style={styles.sectionTitle}>
+                  Thời gian cách li còn lại của bạn
+              </Text>
+              
+              <CountDown 
+                    style={styles.countDownStyle}
+                    until={this.state.second}
+                    onFinish={
+                      this.onDoneCountdown
+                    }
+                    onPress={
+                      this.onPressCountdown
+                    }
+                    size={30}
+                    digitStyle={{backgroundColor: '#602dc4'}}
+                    digitTxtStyle={{color: '#FFF'}}
+                    timeLabels={{d: 'Ngày', h: 'Giờ', m: 'Phút', s: 'Giây'}}
+              />
 
-                <Image 
-                  source={require('../Resources/Countdown.gif')}
-                  style={{
-                    aspectRatio: 0.8, 
-                    resizeMode: 'contain',
-                  }}
-                />
-            </View>
+              <Image 
+                source={require('../Resources/Countdown.gif')}
+                style={{
+                  aspectRatio: 0.75, 
+                  resizeMode: 'contain',
+                  alignSelf: "center",
+                }}
+              />
+            </ImageBackground>
+          </View>
         );
       }
 
@@ -133,18 +138,24 @@ export default class Timer extends React.Component {
       fontSize: 24,
       fontWeight: '600',
       color: "black",
+      alignSelf: "center"
     }, 
 
     MainContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 30,
         backgroundColor: "beige",
     },
 
     countDownStyle: {
         paddingTop:  15,
+    },
+
+    image: {
+      aspectRatio: 0.61,
+      resizeMode: "cover",
+      justifyContent: "center"
     },
    
   });

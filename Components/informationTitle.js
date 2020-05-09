@@ -640,7 +640,10 @@ class InfoTitle extends React.Component {
                     originalLong: position.coords.longitude.toString(),
                     originalLat: position.coords.latitude.toString(),
                 })
-            })
+            },
+            (error) => {
+                console.log(error.code, error.message);
+            })      
     }
 
     changeDateOfBirth(Date){
