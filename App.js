@@ -5,12 +5,14 @@ import MainInfo from './Components/MainInfo'
 import GPS from './Components/GPS'
 import AsyncStorage from '@react-native-community/async-storage';
 import Timer from "./Components/Timer";
+import Map from './Components/GoogleMap'
 
 var name;
 var district;
 var province;
 var originalLat;
 var originalLong;
+var isSupervisor;
 
 export default class App extends React.Component {
 
@@ -24,6 +26,7 @@ export default class App extends React.Component {
         province = await AsyncStorage.getItem("Province")
         originalLat = await AsyncStorage.getItem("OriginalLatitude")
         originalLong = await AsyncStorage.getItem("OriginalLongtitude")
+        isSupervisor = await AsyncStorage.getItem("Role")
 
         if(name != null) {
             this.setState({
@@ -53,15 +56,26 @@ export default class App extends React.Component {
     render() {
 
         if(this.state.login) {
-            return (
-                <Timer
-                    district={district} 
-                    province={province} 
-                    name={name}
-                    originalLat={originalLat}
-                    originalLong={originalLong}
+            if(isSupervisor == "Supervisor") {
+                return(<Map
+                    district={district}
+                    province={province}
+                    Longtitude={originalLong}
+                    Latitude={originalLat}
                 />
-            )
+                )
+            }
+            else {
+                return (
+                    <Timer
+                        district={district} 
+                        province={province} 
+                        name={name}
+                        originalLat={originalLat}
+                        originalLong={originalLong}
+                    />
+                )
+            }
         }
 
         return (

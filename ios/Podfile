@@ -87,6 +87,8 @@ target 'Covidtrack19' do
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   target 'Covidtrack19Tests' do
     inherit! :complete
     # Pods for testing

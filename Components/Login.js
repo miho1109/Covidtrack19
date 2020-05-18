@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ImageBackground, View, Text, TouchableOpacity, TextInput, StyleSheet ,Alert } from 'react-native'
 import firestore from '@react-native-firebase/firestore'
-import SupervisorUI from './SupervisorUI';
+import InformationForm from './InformationForm';
 import MainInfo from '../Components/MainInfo';
 
 export default class LogInInterface extends Component {
@@ -46,7 +46,7 @@ export default class LogInInterface extends Component {
     }
     else if (this.state.page == 'supervisorUI')
     {
-        return(<SupervisorUI/>)
+        return(<InformationForm/>)
     }   
 
     return (

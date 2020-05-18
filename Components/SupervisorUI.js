@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
+import Map from './GoogleMap'
 
 export default class SupervisorUI extends Component{
 
     render() {
             return(
-            <View style = {styles.view1}>
-                <View style = {styles.view2}>
-                    <Text>Chúc mừng bạn đã được làm quản lý</Text>
-                </View>
-            </View>
+            <Map></Map>
         )
     }
 }

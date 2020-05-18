@@ -214,6 +214,9 @@ dependencies {
 
     implementation "androidx.annotation:annotation:1.1.0"
 
+    implementation 'com.google.android.gms:play-services-base:12.0.0'
+    implementation 'com.google.android.gms:play-services-maps:12.0.0'
+
     // For animated GIF support
     implementation 'com.facebook.fresco:animated-gif:2.0.0'
 
