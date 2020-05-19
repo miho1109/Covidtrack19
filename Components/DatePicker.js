@@ -61,7 +61,7 @@ export default class DatePicker extends React.Component {
 const styles = StyleSheet.create({
     container:{
       padding: 5,
-      borderColor: 'black',
+      borderColor: 'darkslateblue',
       marginLeft:30,
       marginRight: 30,
       borderBottomWidth:2,

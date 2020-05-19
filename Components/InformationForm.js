@@ -617,7 +617,7 @@ export default class InformationForm extends React.Component {
 const styles = StyleSheet.create({
         sectionInput:{
             height: 40,
-            borderColor: 'black',
+            borderColor: 'darkslateblue',
             marginLeft:30,
             marginRight: 30,
             borderWidth: 2,

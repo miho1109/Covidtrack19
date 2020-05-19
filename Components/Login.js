@@ -24,14 +24,14 @@ export default class LogInInterface extends Component {
             {
                 firestore().collection("SuspectedUser").doc(this.state.PIN)
                 .get().then (doc => {
-                if(doc.exists) {
-                    this.setState({
-                        page: 'userInterface'
-                    })
-                }
-                else{
-                    Alert.alert("Bạn nhập sai mã PIN")
-                }
+                    if(doc.exists) {
+                        this.setState({
+                            page: 'userInterface'
+                        })
+                    }
+                    else{
+                        Alert.alert("Bạn nhập sai mã PIN")
+                    }
                 })
             }
         })
