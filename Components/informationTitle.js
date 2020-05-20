@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
@@ -18,6 +19,7 @@ import Timer from './Timer';
 import moment from 'moment';
 
 var today = new Date();
+var defaultDate = new Date(1598051730000);
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' '+ today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
 
@@ -35,13 +37,14 @@ class InfoTitle extends React.Component {
         id: '',
         insurance: '',
         address: '',
-        dob: new Date(1598051730000),
+        dob: defaultDate,
         email: '',
         currentDate: date,
         originalLat: '',
         originalLong: '',
 
         countryList: [
+            "Quốc tịch",
             "Việt Nam",
             "Afghanistan",
             "Albania",
@@ -624,6 +627,7 @@ class InfoTitle extends React.Component {
         ],
 
         genderList: [
+            "Giới tính",
             "Nam",
             "Nữ",
         ],
@@ -651,6 +655,31 @@ class InfoTitle extends React.Component {
             dob: Date,
         })
         console.log(this.state.dob)
+    }
+
+    checkInput(){
+        var idLength = this.state.id.length
+        if(this.state.name == ''|| this.state.id == 0
+        || this.state.city == 'Thành phố' || this.state.district == 'Quận'|| this.state.province == 'Phường'
+        ||this.state.gender == 0||this.state.region == 0 ||
+        this.state.address == ""||this.state.email == ""||this.state.dob == defaultDate)
+        {
+            Alert.alert(
+                "Bạn chưa nhập đầy đủ thông tin",
+            )
+        }
+        else if(idLength != 9 && idLength != 12)
+        {
+            Alert.alert(
+                "Bạn đã nhập sai thông tin",
+            )
+        }
+        else {
+            this.saveInfo()
+            Alert.alert(
+                "Bạn đã lưu thông tin thành công",
+            )
+        }
     }
 
     saveInfo() {
@@ -692,13 +721,6 @@ class InfoTitle extends React.Component {
         
         console.log("Save successful.")
     }
-
-
-    checkInputLength(text) {
-        if(text.trim().length < 2){
-            Alert.alert('Xin mời nhập lại !')
-        }
-    }
     
     render() {
         if(this.state.page == 'Timer')
@@ -736,8 +758,6 @@ class InfoTitle extends React.Component {
                         placeholder = "Nhập tên của bạn"
                         style={styles.sectionInput}
                         onChangeText={text => this.setState({name: text})}
-                        onSubmitEditing={(e) => this.checkInputLength(this.state.name)}
-            
                     />
                 </View>
                 
@@ -750,21 +770,22 @@ class InfoTitle extends React.Component {
                     <TextInput
                         placeholder = "Nhập số CMT/CCCD/Hộ chiếu của bạn"
                         style={styles.sectionInput}
+                        keyboardType={'numeric'}
                         onChangeText={text => this.setState({
                             id: text
                         })}   
                     />
                 </View>
                 
-                {/* Cột nhập BHXH */}
+                {/* Cột nhập BHYT */}
                 <View>
-                    <Text style= {styles.sectionText}> Mã số bảo hiểm xã hội
-                    <Text style= {styles.redText}> * </Text>
+                    <Text style= {styles.sectionText}> Mã số bảo hiểm y tế
                     :
                     </Text>
                     <TextInput
-                        placeholder = "Nhập mã số BHXH của bạn"
+                        placeholder = "Nhập mã số BHYT của bạn"
                         style={styles.sectionInput}
+                        keyboardType={'numeric'}
                         onChangeText={text => this.setState({
                             insurance: text
                         })}   
@@ -785,7 +806,8 @@ class InfoTitle extends React.Component {
                 {/* Cột nhập giới tính */}
                 <View>
                     <Text style= {styles.sectionText} >
-                        Giới tính:
+                        Giới tính<Text style= {styles.redText}> * </Text>
+                    :
                     </Text>
                     <Picker
                         selectedValue={this.state.gender}
@@ -806,7 +828,8 @@ class InfoTitle extends React.Component {
                 {/* Cột nhập quốc tịch */}
                 <View>
                     <Text style= {styles.sectionText} >
-                        Quốc tịch:
+                        Quốc tịch<Text style= {styles.redText}> * </Text>
+                    :
                     </Text>
                     <Picker
                         selectedValue={this.state.region}
@@ -968,7 +991,7 @@ class InfoTitle extends React.Component {
                     style={styles.saveButton} 
                    
                     onPress={() => {
-                        this.saveInfo()
+                        this.checkInput()
                         }}>
                         <Text 
                         style={{color: "white", alignSelf: "center", fontSize: 25, paddingTop: 6}}> 

@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
@@ -15,7 +16,6 @@ import Geolocation from "react-native-geolocation-service"
 import Map from './GoogleMap';
 
 export default class InformationForm extends React.Component {
-    
     state = {
         page: 'SupervisorUI',
         city: 'Thành phố',
@@ -23,7 +23,7 @@ export default class InformationForm extends React.Component {
         province: 'Phường',
         chosenProvince: ["Phường"],
         name: '',
-        id: '',
+        id: 0,
         address: '',
         phone: 0,
         originalLat: '',
@@ -374,7 +374,31 @@ export default class InformationForm extends React.Component {
             },
             (error) => {
                 console.log(error.code, error.message);
-            })      
+            })
+    }
+
+    checkInput(){
+        var idLength = this.state.id.length
+        var phoneLength = this.state.phone.length
+        if(this.state.name == ''|| this.state.id == 0|| this.state.phone == 0
+        || this.state.city == 'Thành phố' || this.state.district == 'Quận' || this.state.province == 'Phường')
+        {
+            Alert.alert(
+                "Bạn chưa nhập đầy đủ thông tin",
+            )
+        }
+        else if(idLength != 9 && idLength != 12 || phoneLength != 10)
+        {
+            Alert.alert(
+                "Bạn đã nhập sai thông tin",
+            )
+        }
+        else {
+            this.saveInfo()
+            Alert.alert(
+                "Bạn đã lưu thông tin thành công",
+            )
+        }
     }
 
     saveInfo() {
@@ -404,16 +428,10 @@ export default class InformationForm extends React.Component {
         const fifthPair = ["OriginalLongtitude", this.state.originalLong]
         const sixthPair = ["Role", "Supervisor"]
         AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair, sixthPair])
-        
         console.log("Save successful.")
     }
 
 
-    checkInputLength(text) {
-        if(text.trim().length < 2){
-            Alert.alert('Xin mời nhập lại !')
-        }
-    }
     
     render() {
         if(this.state.page == 'Map')
@@ -429,8 +447,7 @@ export default class InformationForm extends React.Component {
         
         return (
             
-            <ScrollView>
-            <View>
+            <View style= {{flex: 1}} >
               
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}>
@@ -439,7 +456,7 @@ export default class InformationForm extends React.Component {
                 </View>
                 
                 {/* Cột nhập tên */}
-                <View>
+                <View style = {{flex:1}} >
                     <Text style= {styles.sectionText}> Họ và Tên
                     <Text style= {styles.redText}> * </Text>
                     :
@@ -448,19 +465,19 @@ export default class InformationForm extends React.Component {
                         placeholder = "Nhập tên của bạn"
                         style={styles.sectionInput}
                         onChangeText={text => this.setState({name: text})}
-                        onSubmitEditing={(e) => this.checkInputLength(this.state.name)}
             
                     />
                 </View>
                 
                 {/* Cột nhập ID */}
-                <View>
+                <View style = {{flex:1}} >
                     <Text style= {styles.sectionText}> CMT/CCCD/Hộ chiếu
                     <Text style= {styles.redText}> * </Text>
                     :
                     </Text>
                     <TextInput
                         placeholder = "Nhập số CMT/CCCD/Hộ chiếu của bạn"
+                        keyboardType={'numeric'}
                         style={styles.sectionInput}
                         onChangeText={text => this.setState({
                             id: text
@@ -469,7 +486,7 @@ export default class InformationForm extends React.Component {
                 </View>
 
                 {/* Cột nhập số điện thoại */}
-                <View>
+                <View style = {{flex:1}} >
                     <Text style= {styles.sectionText}> Số điện thoại
                     <Text style= {styles.redText}> * </Text>
                     :
@@ -477,6 +494,7 @@ export default class InformationForm extends React.Component {
                     <TextInput
                         placeholder = "Nhập số điện thoại của bạn"
                         style={styles.sectionInput}
+                        keyboardType={'numeric'}
                         onChangeText={text => this.setState({
                             phone: text
                         })}   
@@ -484,7 +502,7 @@ export default class InformationForm extends React.Component {
                 </View>
                 
                 {/* Cột nhập địa chỉ */}
-                <View>
+                <View style = {{flex:2}}>
                     <Text style= {styles.sectionText}> Địa chỉ quản lí
                     <Text style= {styles.redText}> * </Text>
                     :
@@ -594,21 +612,18 @@ export default class InformationForm extends React.Component {
                 
                 
                 {/* Nút lưu dữ liệu */}
-                <Text></Text>
-                <TouchableOpacity 
-                    style={styles.saveButton} 
-                   
-                    onPress={() => {
-                        this.saveInfo()
-                        }}>
-                        <Text 
-                        style={{color: "white", alignSelf: "center", fontSize: 25, paddingTop: 10 }}> 
-                        Lưu
-                        </Text>
-                </TouchableOpacity>
-
+                <View style = {{flex:0.65}}>
+                    <TouchableOpacity 
+                        style={styles.saveButton} 
+                    
+                        onPress={() => this.checkInput()}>
+                            <Text 
+                            style={{color: "white", alignSelf: "center", fontSize: 25, paddingTop: 10 }}> 
+                            Lưu
+                            </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            </ScrollView>
             );
     }
 
@@ -636,7 +651,7 @@ const styles = StyleSheet.create({
         sectionContainer: {
             backgroundColor: 'darkslateblue',
             paddingHorizontal: 24,
-            flex: 1,
+            flex: 0.4,
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
@@ -659,6 +674,7 @@ const styles = StyleSheet.create({
             marginLeft: 24,
         },
         saveButton: {
+            flex: 1,
             backgroundColor: "darkslateblue",
             marginTop: 30,
             paddingBottom: 5,
