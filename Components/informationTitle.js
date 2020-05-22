@@ -654,7 +654,6 @@ class InfoTitle extends React.Component {
         this.setState({
             dob: Date,
         })
-        console.log(this.state.dob)
     }
 
     checkInput(){
@@ -719,7 +718,7 @@ class InfoTitle extends React.Component {
         const fifthPair = ["OriginalLongtitude", this.state.originalLong]
         AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair])
         
-        console.log("Save successful.")
+        console.log("Lưu thông tin người dùng thành công.")
     }
     
     render() {

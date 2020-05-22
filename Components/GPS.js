@@ -79,7 +79,7 @@ export default class GPS extends React.Component {
         });
         
         DeviceEventEmitter.addListener('locationProviderStatusChange', function(status) { 
-            console.log(status);
+            console.log("Status hiện tại của GPS: " , status);
             let a = JSON.stringify(status);
             if(a.slice(11,16) == "false") {
                 Alert.alert("Vui lòng bật lại GPS, làm ơn !!!")

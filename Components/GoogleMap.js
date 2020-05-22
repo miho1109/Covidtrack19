@@ -271,7 +271,7 @@ export default class Map extends React.Component{
               var temp = new Point(Number(doc.data().Latitude), Number(doc.data().Longtitude))
               coordinateList.push(temp);
               sortPoints(coordinateList)
-              console.log(coordinateList);
+              //console.log(coordinateList);
             });
             this.setState({
                 updateComplete: true

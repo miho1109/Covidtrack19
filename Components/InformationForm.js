@@ -371,10 +371,13 @@ export default class InformationForm extends React.Component {
                     originalLong: position.coords.longitude.toString(),
                     originalLat: position.coords.latitude.toString(),
                 })
+                console.log("Tọa độ để focus: " , this.state.originalLat, " , ", this.state.originalLong);
             },
             (error) => {
                 console.log(error.code, error.message);
-            })
+            },
+            {enableHighAccuracy: true, forceRequestLocation: true, timeout: 1500, maximumAge: 5000, showLocationDialog: true, fastestInterval: 10,})
+            
     }
 
     checkInput(){
@@ -428,7 +431,7 @@ export default class InformationForm extends React.Component {
         const fifthPair = ["OriginalLongtitude", this.state.originalLong]
         const sixthPair = ["Role", "Supervisor"]
         AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair, sixthPair])
-        console.log("Save successful.")
+        console.log("Lưu thông tin người dùng thành công.")
     }
 
 

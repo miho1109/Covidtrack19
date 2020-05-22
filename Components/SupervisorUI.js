@@ -1,8 +1,25 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
-import Map from './GoogleMap'
+import Map from './GoogleMap';
+import firestore from '@react-native-firebase/firestore';
 
 export default class SupervisorUI extends Component{
+
+   componentDidMount() {
+      let doc = firestore()
+      .collection("Hà Nội")
+      .doc("Tây Hồ")
+      .collection("Bưởi")
+      .doc("Supervisor")
+      .collection("SuspectedUser")
+      .doc("An")
+      .onSnapshot().then (docSnapshot => {
+      console.log(`Received doc snapshot: ${docSnapshot}`);
+      // ...
+      }, err => {
+      console.log(`Encountered error: ${err}`);
+});
+   }
 
     render() {
             return(
