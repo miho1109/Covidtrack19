@@ -656,6 +656,7 @@ class InfoTitle extends React.Component {
     }
 
     checkInput(){
+        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var idLength = this.state.id.length
         var phoneLength = this.state.phone.length
         if(this.state.name == ''|| this.state.id == 0|| this.state.phone == 0
@@ -672,6 +673,9 @@ class InfoTitle extends React.Component {
             Alert.alert(
                 "Bạn đã nhập sai thông tin",
             )
+        }
+        else if (reg.test(this.state.email) === false){
+            Alert.alert("Email của bạn không hợp lệ");
         }
         else {
             this.saveInfo()
