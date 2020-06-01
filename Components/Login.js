@@ -57,6 +57,7 @@ export default class LogInInterface extends Component {
                 </Text>
                 <TextInput style = {styles.inPut}
                 placeholder = "Mã PIN"
+                keyboardType={'numeric'}
                 secureTextEntry = {true}
                 onChangeText ={text => this.setState({
                     PIN: text,

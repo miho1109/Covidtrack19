@@ -6,6 +6,7 @@ import GPS from './Components/GPS'
 import AsyncStorage from '@react-native-community/async-storage';
 import Timer from "./Components/Timer";
 import Map from './Components/GoogleMap'
+import SupervisorUI from './Components/SupervisorUI'
 
 var name;
 var district;
@@ -34,7 +35,7 @@ export default class App extends React.Component {
             })
         }
 
-        //await AsyncStorage.clear()
+        await AsyncStorage.clear()
 
         const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -57,7 +58,7 @@ export default class App extends React.Component {
 
         if(this.state.login) {
             if(isSupervisor == "Supervisor") {
-                return(<Map
+                return(<SupervisorUI
                     district={district}
                     province={province}
                     Longtitude={originalLong}

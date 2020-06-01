@@ -12,6 +12,7 @@ from 'react-native';
 import SwipeablePanel from "rn-swipeable-panel";
 import Accordion from 'react-native-collapsible/Accordion';
 import moment from 'moment';
+import CallSuspected from './CallSuspected';
 
 
 class AccordionView extends Component {
@@ -52,6 +53,7 @@ class AccordionView extends Component {
         Latitude={sectionContent.Latitude}
         Longitude={sectionContent.Longtitude}
         focusOnMarker={this.focusOnMarker.bind(this)}
+        Phone = {sectionContent.Phone}
       />
     );
   };
@@ -89,6 +91,7 @@ class Item extends React.Component {
             Duration: props.Duration,
             Latitude: props.Latitude,
             Longitude: props.Longitude,
+            Phone: props.Phone,
       }
     }
     
@@ -114,7 +117,6 @@ class Item extends React.Component {
           <Text style={styles.info}>
               Số CMND:: {this.state.CMND}
           </Text>
-
           <Text style={styles.info}>
               Địa chỉ: {this.state.Location}
           </Text>
@@ -130,7 +132,9 @@ class Item extends React.Component {
                 Tìm kiếm trên bản đồ
             </Text>
           </TouchableOpacity>
-
+          <CallSuspected 
+          Phone = {this.state.Phone}
+          />
        </View>
       );
     }
@@ -176,7 +180,7 @@ export default class DropDown extends React.Component {
     render() {
       return (       
        <View>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.MainContainer}
             onPress={this.togglePanel}
           >

@@ -14,6 +14,7 @@ import CountDown from 'react-native-countdown-component';
 import moment from 'moment';
 import firestore from '@react-native-firebase/firestore'
 import GPS from './GPS'
+import CallSuperVisor from './CallSuperVisor';
 
 export default class Timer extends React.Component {
 
@@ -93,7 +94,6 @@ export default class Timer extends React.Component {
               <Text style={styles.sectionTitle}>
                   Thời gian cách li còn lại của bạn
               </Text>
-              
               <CountDown 
                     style={styles.countDownStyle}
                     until={this.state.second}
@@ -108,7 +108,6 @@ export default class Timer extends React.Component {
                     digitTxtStyle={{color: '#FFF'}}
                     timeLabels={{d: 'Ngày', h: 'Giờ', m: 'Phút', s: 'Giây'}}
               />
-
               <Image 
                 source={require('../Resources/Countdown.gif')}
                 style={{
@@ -116,6 +115,10 @@ export default class Timer extends React.Component {
                   resizeMode: 'contain',
                   alignSelf: "center",
                 }}
+              />
+              <CallSuperVisor
+              district = {this.state.district}
+              province = {this.state.province}
               />
             </ImageBackground>
           </View>

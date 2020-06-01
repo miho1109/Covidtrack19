@@ -14,9 +14,7 @@ import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from "react-native-geolocation-service"
 import DatePicker from './DatePicker';
-import GPS from './GPS';
 import Timer from './Timer';
-import moment from 'moment';
 
 var today = new Date();
 var defaultDate = new Date(1598051730000);
@@ -37,6 +35,7 @@ class InfoTitle extends React.Component {
         id: '',
         insurance: '',
         address: '',
+        phone: 0,
         dob: defaultDate,
         email: '',
         currentDate: date,
@@ -658,7 +657,8 @@ class InfoTitle extends React.Component {
 
     checkInput(){
         var idLength = this.state.id.length
-        if(this.state.name == ''|| this.state.id == 0
+        var phoneLength = this.state.phone.length
+        if(this.state.name == ''|| this.state.id == 0|| this.state.phone == 0
         || this.state.city == 'Thành phố' || this.state.district == 'Quận'|| this.state.province == 'Phường'
         ||this.state.gender == 0||this.state.region == 0 ||
         this.state.address == ""||this.state.email == ""||this.state.dob == defaultDate)
@@ -667,7 +667,7 @@ class InfoTitle extends React.Component {
                 "Bạn chưa nhập đầy đủ thông tin",
             )
         }
-        else if(idLength != 9 && idLength != 12)
+        else if(idLength != 9 && idLength != 12|| phoneLength != 10)
         {
             Alert.alert(
                 "Bạn đã nhập sai thông tin",
@@ -691,6 +691,7 @@ class InfoTitle extends React.Component {
         .collection("SuspectedUser")
         .doc(this.state.name)
         .set({
+            Phone: this.state.phone,
             Name: this.state.name,
             CMND: this.state.id,
             Insurance: this.state.insurance,
@@ -704,6 +705,7 @@ class InfoTitle extends React.Component {
             CurrentDate: this.state.currentDate,
             Longtitude: this.state.originalLong,
             Latitude: this.state.originalLat,
+            
         })
         .then(() => {
             this.setState({
@@ -757,6 +759,22 @@ class InfoTitle extends React.Component {
                         placeholder = "Nhập tên của bạn"
                         style={styles.sectionInput}
                         onChangeText={text => this.setState({name: text})}
+                    />
+                </View>
+
+                {/* Cột nhập số điện thoại */}
+                <View style = {{flex:1}} >
+                    <Text style= {styles.sectionText}> Số điện thoại
+                    <Text style= {styles.redText}> * </Text>
+                    :
+                    </Text>
+                    <TextInput
+                        placeholder = "Nhập số điện thoại của bạn"
+                        style={styles.sectionInput}
+                        keyboardType={'numeric'}
+                        onChangeText={text => this.setState({
+                            phone: text
+                        })}   
                     />
                 </View>
                 
