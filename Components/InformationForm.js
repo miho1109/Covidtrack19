@@ -376,7 +376,7 @@ export default class InformationForm extends React.Component {
             (error) => {
                 console.log(error.code, error.message);
             },
-            {enableHighAccuracy: false, forceRequestLocation: true, timeout: 1500, maximumAge: 5000, showLocationDialog: true, fastestInterval: 10,})
+            {enableHighAccuracy: true, forceRequestLocation: true, timeout: 1500, maximumAge: 5000, showLocationDialog: true, fastestInterval: 10,})
             
     }
 

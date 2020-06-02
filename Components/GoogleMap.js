@@ -338,6 +338,7 @@ export default class Map extends React.Component{
                   strokeColor={"#4682b4"}
                 />
             </MapView>
+            
             <DropDown
               List={quarantineList}
               focusOnMarker={this.focusOnMarker.bind(this)}

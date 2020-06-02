@@ -35,7 +35,7 @@ export default class App extends React.Component {
             })
         }
 
-        await AsyncStorage.clear()
+       // await AsyncStorage.clear()
 
         const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,

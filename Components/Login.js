@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { ImageBackground, View, Text, TouchableOpacity, TextInput, StyleSheet ,Alert } from 'react-native'
 import firestore from '@react-native-firebase/firestore'
 import InformationForm from './InformationForm';
-import MainInfo from '../Components/MainInfo';
 
 export default class LogInInterface extends Component {
 
@@ -42,7 +41,15 @@ export default class LogInInterface extends Component {
 
     if ( this.state.page == 'userInterface' )
     {
-        return(<MainInfo/>)
+        return( 
+           <Timer 
+                district={district} 
+                province={province} 
+                name={this.state.name}
+                originalLat={this.state.originalLat}
+                originalLong={this.state.originalLong}
+                />
+            )
     }
     else if (this.state.page == 'supervisorUI')
     {

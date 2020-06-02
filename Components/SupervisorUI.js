@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, Alert} from 'react-native';
 import Map from './GoogleMap';
 import firestore from '@react-native-firebase/firestore';
 import NotifService from './Notification';
+import AddSuspected from './AddSuspected';
 
 var notif = new NotifService;
+
 
 export default class SupervisorUI extends Component{
    constructor(props) {
@@ -63,12 +65,17 @@ export default class SupervisorUI extends Component{
 
     render() {
             return(
-            <Map
+            <View style={styles.view}>
+               
+             <Map
                district={this.state.district}
                province={this.state.province}
                Longtitude={this.state.Longtitude}
                Latitude={this.state.Latitude}
             />
+            <AddSuspected />  
+            </View>
+       
         )
     }
 }

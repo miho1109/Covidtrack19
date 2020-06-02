@@ -15,6 +15,7 @@ import moment from 'moment';
 import CallSuspected from './CallSuspected';
 
 
+
 class AccordionView extends Component {
   constructor(props) {
     super(props);
@@ -141,6 +142,7 @@ class Item extends React.Component {
 }
 
 
+
 export default class DropDown extends React.Component {
 
     constructor(props) {
@@ -200,6 +202,7 @@ export default class DropDown extends React.Component {
                 focusOnMarker={this.focusOnMarker.bind(this)}
               />
             </ScrollView>
+           
           </SwipeablePanel>
        </View>
       );
@@ -207,6 +210,7 @@ export default class DropDown extends React.Component {
   };
 
   const styles = StyleSheet.create({
+    
     MainContainer: {
       position: 'absolute',
       bottom: 0,

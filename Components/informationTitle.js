@@ -632,28 +632,6 @@ class InfoTitle extends React.Component {
         ],
     }
 
-    componentDidMount() {
-        this.getUserLocation();
-    }
-
-    getUserLocation() {
-        Geolocation.getCurrentPosition(
-            (position) => {
-                this.setState({
-                    originalLong: position.coords.longitude.toString(),
-                    originalLat: position.coords.latitude.toString(),
-                })
-            },
-            (error) => {
-                console.log(error.code, error.message);
-            })      
-    }
-
-    changeDateOfBirth(Date){
-        this.setState({
-            dob: Date,
-        })
-    }
 
     checkInput(){
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -685,6 +663,16 @@ class InfoTitle extends React.Component {
         }
     }
 
+    changeDateOfBirth(Date){
+        this.setState({
+            dob: Date,
+        })
+    }
+
+    changeState() {
+        this.props.changeState();
+    }
+
     saveInfo() {
 
         firestore()
@@ -693,7 +681,7 @@ class InfoTitle extends React.Component {
         .collection(this.state.chosenProvince[this.state.province])
         .doc("Supervisor")
         .collection("SuspectedUser")
-        .doc(this.state.name)
+        .doc(this.state.id)
         .set({
             Phone: this.state.phone,
             Name: this.state.name,
@@ -711,11 +699,6 @@ class InfoTitle extends React.Component {
             Latitude: this.state.originalLat,
             
         })
-        .then(() => {
-            this.setState({
-                page: 'Timer'
-                })
-        });
 
         const firstPair = ["ID", this.state.name]
         const secondPair = ["District", this.state.districtList[this.state.district]]
@@ -728,20 +711,6 @@ class InfoTitle extends React.Component {
     }
     
     render() {
-        if(this.state.page == 'Timer')
-        {   
-            var district = this.state.districtList[this.state.district];
-            var province = this.state.chosenProvince[this.state.province];
-            return(<Timer 
-                district={district} 
-                province={province} 
-                name={this.state.name}
-                originalLat={this.state.originalLat}
-                originalLong={this.state.originalLong}
-                />
-            )
-        }
-        
         return (
             
             <ScrollView>
@@ -1012,8 +981,10 @@ class InfoTitle extends React.Component {
                     style={styles.saveButton} 
                    
                     onPress={() => {
-                        this.checkInput()
-                        }}>
+                                this.checkInput()
+                                this.changeState()
+                            }
+                        }>
                         <Text 
                         style={{color: "white", alignSelf: "center", fontSize: 25, paddingTop: 6}}> 
                         Lưu
@@ -1069,6 +1040,8 @@ const styles = StyleSheet.create({
     saveButton: {
         backgroundColor: "darkslateblue",
         paddingBottom: 10,
+        borderBottomStartRadius: 20,
+        borderBottomEndRadius: 20,
     },
     sectionContainer: {
         backgroundColor: 'darkslateblue',
@@ -1077,6 +1050,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        borderTopStartRadius: 20,
+        borderTopEndRadius: 20,
       },
       sectionTitle: {
         paddingBottom: 10,
