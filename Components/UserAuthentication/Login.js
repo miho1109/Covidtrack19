@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ImageBackground, View, Text, TouchableOpacity, TextInput, StyleSheet ,Alert } from 'react-native'
+import { ImageBackground, ScrollView, Text, TouchableOpacity, TextInput, StyleSheet ,Alert ,View } from 'react-native'
 import InformationForm from '../Supervisor/InformationForm';
 import Timer from '../Self-Quarantine User/SuspectedUserUI'
 import LoginJSReadData from '../Push&PullData/LoginJSReadData'

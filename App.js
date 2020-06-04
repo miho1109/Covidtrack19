@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, PermissionsAndroid, View} from "react-native";
+import {StyleSheet, PermissionsAndroid, View, ScrollView} from "react-native";
 import LogInInterface from './Components/UserAuthentication/Login';
 import Timer from "./Components/Self-Quarantine User/SuspectedUserUI";
 import SupervisorUI from './Components/Supervisor/SupervisorUI'
@@ -73,7 +73,8 @@ export default class App extends React.Component {
         }
 
         else return (
-            <View>
+            <View style={{flex: 1}}>
+                <LogInInterface />
                 <AppJSPullData 
                     checkLogin={this.checkLogin.bind(this)}
                     name = {this.state.name}
@@ -82,9 +83,8 @@ export default class App extends React.Component {
                     originalLat = {this.state.originalLat}
                     originalLong = {this.state.originalLong}
                     isSupervisor = {this.state.isSupervisor}
-                />
-                <LogInInterface />
-            </View>        
+                />  
+            </View>
         );
     }
 };

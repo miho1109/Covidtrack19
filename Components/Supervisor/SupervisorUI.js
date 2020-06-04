@@ -19,17 +19,18 @@ export default class SupervisorUI extends Component{
             return(
             <View style={styles.view}>
 
-            <SupervisorRealTimePullData
-               province={this.state.province}
-               district={this.state.district}
-            />   
-            <Map
-               district={this.state.district}
-               province={this.state.province}
-               Longtitude={this.state.Longtitude}
-               Latitude={this.state.Latitude}
-            />
-            <AddSuspected />  
+               <SupervisorRealTimePullData
+                  province={this.state.province}
+                  district={this.state.district}
+               />   
+               <Map
+                  district={this.state.district}
+                  province={this.state.province}
+                  Longtitude={this.state.Longtitude}
+                  Latitude={this.state.Latitude}
+               />
+               <AddSuspected />  
+
             </View>
        
         )
