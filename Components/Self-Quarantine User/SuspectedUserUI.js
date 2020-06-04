@@ -12,9 +12,9 @@ from 'react-native';
 
 import CountDown from 'react-native-countdown-component';
 import moment from 'moment';
-import firestore from '@react-native-firebase/firestore'
 import GPS from './GPS'
 import CallSuperVisor from './CallSupervisor';
+import SuspectedPullData from '../Push&PullData/SuspectedPullData'
 
 export default class Timer extends React.Component {
 
@@ -31,10 +31,6 @@ export default class Timer extends React.Component {
       }
     }
 
-    componentDidMount() {
-      this.getData();
-    }
-
     setTime () {
       var a = moment(this.state.currentDate, "YYYY-MM-DD HH:mm:ss");
       var b = a.clone().add(2, 'week');
@@ -46,24 +42,11 @@ export default class Timer extends React.Component {
       })
     }
 
-    getData () {
-      firestore()
-        .collection("Hà Nội")
-        .doc(this.state.district)
-        .collection(this.state.province)
-        .doc("Supervisor")
-        .collection("SuspectedUser")
-        .doc(this.state.name)
-        .get().then(doc => {
-            if(doc.exists) {
-                var data = doc.data();
-                this.setState({
-                    currentDate: data.CurrentDate,
-                })
-                this.setTime();
-            }
-        })
-
+    getData (doc) {
+      this.setState({
+          currentDate: doc,
+      })
+      this.setTime();
     }
 
     onDoneCountdown () {
@@ -87,6 +70,9 @@ export default class Timer extends React.Component {
           <View style={styles.MainContainer}>
             <ImageBackground source={require('../Resources/CountdownBackground.jpg')} style={styles.image}>
               < GPS
+                id={this.state.name}
+                district={this.state.district}
+                province={this.state.province}
                 originalLat={this.state.originalLat}
                 originalLong={this.state.originalLong}
               /> 
@@ -126,9 +112,12 @@ export default class Timer extends React.Component {
       }
 
       return (       
-            <View style={styles.MainContainer}>
-
-            </View>
+            <SuspectedPullData
+              name = {this.state.name}
+              district = {this.state.district}
+              province = {this.state.province}
+              getData = {this.getData.bind(this)}
+            />
       );
 
     }

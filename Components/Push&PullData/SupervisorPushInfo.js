@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class SupervisorPushInfo extends Component {
 
   
-    static saveInfo(Phone, Name, CMND, District, Province) {
+    static saveInfo(Phone, Name, CMND, District, Province, Latitude, Longtitude) {
         
         firestore()
         .collection("Hà Nội")

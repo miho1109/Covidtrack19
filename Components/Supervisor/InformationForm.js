@@ -11,9 +11,9 @@ import {
 
 import {Picker} from '@react-native-community/picker';
 import Geolocation from "react-native-geolocation-service"
-import Map from './GoogleMap';
 import CityAndProvinceList from '../CityAndProvinceList'
 import SupervisorPushInfo from '../Push&PullData/SupervisorPushInfo'
+import SupervisorUI from './SupervisorUI'
 
 export default class InformationForm extends React.Component {
     state = {
@@ -90,12 +90,13 @@ export default class InformationForm extends React.Component {
     render() {
         if(this.state.page == 'Map')
         {   
-            return(<Map
-                district={CityAndProvinceList.getDistrict()[this.state.district]}
-                province={this.state.chosenProvince[this.state.province]}
-                Longtitude={this.state.originalLong}
-                Latitude={this.state.originalLat}
-            />
+            return(
+                <SupervisorUI
+                    district={CityAndProvinceList.getDistrict()[this.state.district]}
+                    province={this.state.chosenProvince[this.state.province]}
+                    Longtitude={this.state.originalLong}
+                    Latitude={this.state.originalLat}
+                />
             )
         }
         

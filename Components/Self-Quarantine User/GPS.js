@@ -9,6 +9,7 @@ import {
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
 import Geolocation from "react-native-geolocation-service"
 import NotifService from '../Notification';
+import GPSPushData from '../Push&PullData/GPSPushData'
 
 var notif = new NotifService;
 
@@ -16,6 +17,9 @@ export default class GPS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: props.id,
+            district: props.district,
+            province: props.province,
             Long: props.originalLong,
             Lat: props.originalLat,
             originalLong: props.originalLong,
@@ -95,28 +99,30 @@ export default class GPS extends React.Component {
 
     checkLocation(){
         
-        var R = 6371000; // metres
-        var φ1 = this.state.Lat* Math.PI / 180;
-        var φ2 = this.state.originalLat* Math.PI / 180;
-        var Δφ = (this.state.originalLat-this.state.Lat)* Math.PI / 180;
-        var Δλ = (this.state.originalLong-this.state.Long)* Math.PI / 180;
+        if(this.state.originalLat != 0 && this.state.originalLong != 0) {
+            var R = 6371000; // metres
+            var φ1 = this.state.Lat* Math.PI / 180;
+            var φ2 = this.state.originalLat* Math.PI / 180;
+            var Δφ = (this.state.originalLat-this.state.Lat)* Math.PI / 180;
+            var Δλ = (this.state.originalLong-this.state.Long)* Math.PI / 180;
 
-        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        this.setState({
-            distanceFromHome: R * c
-        })
-        
-        console.log("Distance From Home: ", this.state.distanceFromHome);
-        
+            this.setState({
+                distanceFromHome: R * c
+            })
+            
+            console.log("Distance From Home: ", this.state.distanceFromHome);
+        }
+
         if(this.state.distanceFromHome > 10){
             this.createNotification();
             notif.cancelAll();
             notif.localNotif();
-            //Alert.alert('Bạn đang đi quá xa khỏi nơi cách ly!')
+            GPSPushData.pushLocation(this.state.id, this.state.district, this.state.province, this.state.Lat, this.state.Long);
         }
     }
 

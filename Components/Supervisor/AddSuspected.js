@@ -10,7 +10,7 @@ import {
 }
 from 'react-native';
 
-import InfoTitle from './InformationTitle';
+import InfoTitle from '../Supervisor/informationTitle';
 
 export default class AddSuspected extends React.Component {
     state = {
