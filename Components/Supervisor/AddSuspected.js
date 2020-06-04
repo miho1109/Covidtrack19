@@ -10,7 +10,7 @@ import {
 }
 from 'react-native';
 
-import InfoTitle from './informationTitle';
+import InfoTitle from './InformationTitle';
 
 export default class AddSuspected extends React.Component {
     state = {
@@ -21,7 +21,6 @@ export default class AddSuspected extends React.Component {
         this.setState({
             info: false,
         })
-        console.log("Ok")
     }
 
     render(){

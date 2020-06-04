@@ -10,11 +10,10 @@ import {
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
-import firestore from '@react-native-firebase/firestore';
-import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from "react-native-geolocation-service"
 import Map from './GoogleMap';
 import CityAndProvinceList from '../CityAndProvinceList'
+import SupervisorPushInfo from '../Push&PullData/SupervisorPushInfo'
 
 export default class InformationForm extends React.Component {
     state = {
@@ -78,35 +77,11 @@ export default class InformationForm extends React.Component {
     }
 
     saveInfo() {
-
-        firestore()
-        .collection("Hà Nội")
-        .doc(CityAndProvinceList.getDistrict()[this.state.district])
-        .collection(this.state.chosenProvince[this.state.province])
-        .doc("Supervisor")
-        .set({
-            Name: this.state.name,
-            CMND: this.state.id,
-            District: CityAndProvinceList.getDistrict()[this.state.district],
-            Province: this.state.chosenProvince[this.state.province],
-            Phone: this.state.phone,
+        SupervisorPushInfo.saveInfo();
+        this.setState({
+            page: 'Map'
         })
-        .then(() => {
-            this.setState({
-                page: 'Map'
-                })
-        });
-
-        const firstPair = ["ID", this.state.name]
-        const secondPair = ["District", CityAndProvinceList.getDistrict()[this.state.district]]
-        const thirdPair = ["Province", this.state.chosenProvince[this.state.province]]
-        const forthPair = ["OriginalLatitude", this.state.originalLat]
-        const fifthPair = ["OriginalLongtitude", this.state.originalLong]
-        const sixthPair = ["Role", "Supervisor"]
-        AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair, sixthPair])
-        console.log("Lưu thông tin người dùng thành công.")
     }
-
 
     
     render() {

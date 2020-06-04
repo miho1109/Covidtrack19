@@ -41,7 +41,7 @@ export default class AppJSPullData extends React.Component {
                 this.state.isSupervisor
             );
         }
-        
+    
     }
 
     render() {

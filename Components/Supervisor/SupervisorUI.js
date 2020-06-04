@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Alert} from 'react-native';
 import Map from './GoogleMap';
-import firestore from '@react-native-firebase/firestore';
-import NotifService from '../Notification';
 import AddSuspected from './AddSuspected';
-
-var notif = new NotifService;
-
+import SupervisorRealTimePullData from '../Push&PullData/SupervisorRealTimePullData'
 
 export default class SupervisorUI extends Component{
    constructor(props) {
@@ -19,55 +15,15 @@ export default class SupervisorUI extends Component{
     }
   }
 
-   componentDidMount() {
-      firestore()
-      .collection("Hà Nội")
-      .doc("Tây Hồ")
-      .collection("Bưởi")
-      .doc("Supervisor")
-      .collection("SuspectedUser")
-      .onSnapshot (docSnapshot => {
-      docSnapshot.docChanges().forEach(change => {
-         if(change.type === "modified") {
-            this.createNotification(change.doc.data().Name, change.doc.data().CMND, change.doc.data().QuarantineLocation);
-         }
-      }
-      )
-      }, err => {
-         console.log(`Encountered error: ${err}`);
-      });
-   }
-
-   onRegister(token) {
-      Alert.alert('Registered !', JSON.stringify(token));
-      //console.log(token);
-      this.setState({registerToken: token.token, fcmRegistered: true});
-    }
-  
-   onNotif(notif) {
-      //console.log(notif);
-      Alert.alert(notif.title, notif.bigText);
-   }
-  
-   createNotification(Name, CMND, QuarantineLocation) {
-      var info = Name + " vừa xổng chuồng";
-      var info_BigText = "Số CMND: "  + CMND + "\n" + "Địa chỉ: " + QuarantineLocation;
-      notif = new NotifService (
-          this.onRegister.bind(this),
-          this.onNotif.bind(this),
-          "Cảnh báo!",
-          info,
-          info_BigText,
-      );
-      notif.cancelAll();
-      notif.localNotif();
-   }
-
     render() {
             return(
             <View style={styles.view}>
-               
-             <Map
+
+            <SupervisorRealTimePullData
+               province={this.state.province}
+               district={this.state.district}
+            />   
+            <Map
                district={this.state.district}
                province={this.state.province}
                Longtitude={this.state.Longtitude}

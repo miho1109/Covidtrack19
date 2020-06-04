@@ -1,11 +1,9 @@
 import React from "react";
-import {StyleSheet, PermissionsAndroid} from "react-native";
+import {StyleSheet, PermissionsAndroid, View} from "react-native";
 import LogInInterface from './Components/UserAuthentication/Login';
-import AsyncStorage from '@react-native-community/async-storage';
 import Timer from "./Components/Self-Quarantine User/SuspectedUserUI";
 import SupervisorUI from './Components/Supervisor/SupervisorUI'
 import AppJSPullData from './Components/Push&PullData/AppJSPullData'
-
 
 
 export default class App extends React.Component {
@@ -29,7 +27,6 @@ export default class App extends React.Component {
             originalLong : originalLong,
             isSupervisor : isSupervisor,
         })
-      
     }
 
     showGPSDialog  = async () => {
@@ -53,7 +50,6 @@ export default class App extends React.Component {
     render() {
 
         if(this.state.login) {
-            console.log("test login");
             if(this.state.isSupervisor == "Supervisor") {
                 return(<SupervisorUI
                     district={this.state.district}
@@ -76,20 +72,20 @@ export default class App extends React.Component {
             }
         }
 
-        return (
-            <AppJSPullData 
-                checkLogin={this.checkLogin.bind(this)}
-                name = {this.state.name}
-                district = {this.state.district}
-                province = {this.state.province}
-                originalLat = {this.state.originalLat}
-                originalLong = {this.state.originalLong}
-                isSupervisor = {this.state.isSupervisor}
-            />,
-            <LogInInterface />
-            
+        else return (
+            <View>
+                <AppJSPullData 
+                    checkLogin={this.checkLogin.bind(this)}
+                    name = {this.state.name}
+                    district = {this.state.district}
+                    province = {this.state.province}
+                    originalLat = {this.state.originalLat}
+                    originalLong = {this.state.originalLong}
+                    isSupervisor = {this.state.isSupervisor}
+                />
+                <LogInInterface />
+            </View>        
         );
-        //return <TestNoti/>
     }
 };
 

@@ -48,7 +48,7 @@ export default class LogInInterface extends Component {
     else if (this.state.page == 'logIn') {
         return (
         <View style = {styles.view}  >
-            <ImageBackground source={require('C:/Users/minhh/Covid19/Resources/Background.jpg')} style={styles.image}>
+            <ImageBackground source={require('../Resources/Background.jpg')} style={styles.image}>
                 <Text style = {styles.text}>
                     Covid19-Tracker
                 </Text>

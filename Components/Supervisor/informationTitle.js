@@ -10,10 +10,9 @@ import {
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
-import firestore from '@react-native-firebase/firestore';
-import AsyncStorage from '@react-native-community/async-storage';
 import DatePicker from './DatePicker';
 import CityAndProvinceList from '../CityAndProvinceList'
+import SuspectedPushInfo from '../Push&PullData/SuspectedPushInfo'
 
 
 var today = new Date();
@@ -91,40 +90,14 @@ class InfoTitle extends React.Component {
     }
 
     saveInfo() {
+        SuspectedPushInfo.saveInfo(this.state.phone, this.state.name, this.state.id,
+                                    this.state.insurance, this.state.dob, this.state.genderList[this.state.gender],
+                                    CityAndProvinceList.getCountry()[this.state.region], 
+                                    CityAndProvinceList.getDistrict()[this.state.district],
+                                    this.state.chosenProvince[this.state.province],
+                                    this.state.address, this.state.email, this.state.currentDate,
+                                    this.state.originalLong, this.state.originalLat)
 
-        firestore()
-        .collection("Hà Nội")
-        .doc(CityAndProvinceList.getDistrict()[this.state.district])
-        .collection(this.state.chosenProvince[this.state.province])
-        .doc("Supervisor")
-        .collection("SuspectedUser")
-        .doc(this.state.id)
-        .set({
-            Phone: this.state.phone,
-            Name: this.state.name,
-            CMND: this.state.id,
-            Insurance: this.state.insurance,
-            DateOfBirth: this.state.dob,
-            Gender: this.state.genderList[this.state.gender],
-            Region: this.state.countryList[this.state.region],
-            District: CityAndProvinceList.getDistrict()[this.state.district],
-            Province: this.state.chosenProvince[this.state.province],
-            QuarantineLocation: this.state.address,
-            Email: this.state.email,
-            CurrentDate: this.state.currentDate,
-            Longtitude: this.state.originalLong,
-            Latitude: this.state.originalLat,
-            
-        })
-
-        const firstPair = ["ID", this.state.name]
-        const secondPair = ["District", CityAndProvinceList.getDistrict()[this.state.district]]
-        const thirdPair = ["Province", this.state.chosenProvince[this.state.province]]
-        const forthPair = ["OriginalLatitude", this.state.originalLat]
-        const fifthPair = ["OriginalLongtitude", this.state.originalLong]
-        AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair])
-        
-        console.log("Lưu thông tin người dùng thành công.")
     }
     
     render() {
@@ -247,7 +220,7 @@ class InfoTitle extends React.Component {
                             })
                         }}
                     >
-                        {this.state.countryList.map((item, index) => {
+                        {CityAndProvinceList.getCountry().map((item, index) => {
                             return (< Picker.Item label={item} value={index} key={index} />);
                         })}
                     </Picker>

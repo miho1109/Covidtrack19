@@ -85,7 +85,7 @@ export default class Timer extends React.Component {
       if(this.state.second != 0) {
         return (        
           <View style={styles.MainContainer}>
-            <ImageBackground source={require('C:/Users/minhh/Covid19/Resources/CountdownBackground.jpg')} style={styles.image}>
+            <ImageBackground source={require('../Resources/CountdownBackground.jpg')} style={styles.image}>
               < GPS
                 originalLat={this.state.originalLat}
                 originalLong={this.state.originalLong}
@@ -109,7 +109,7 @@ export default class Timer extends React.Component {
                     timeLabels={{d: 'Ngày', h: 'Giờ', m: 'Phút', s: 'Giây'}}
               />
               <Image 
-                source={require('C:/Users/minhh/Covid19/Resources/Countdown.gif')}
+                source={require('../Resources/Countdown.gif')}
                 style={{
                   aspectRatio: 0.75, 
                   resizeMode: 'contain',
