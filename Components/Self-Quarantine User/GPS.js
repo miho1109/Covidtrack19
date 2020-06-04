@@ -8,7 +8,7 @@ import {
 
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
 import Geolocation from "react-native-geolocation-service"
-import NotifService from './Notification';
+import NotifService from '../Notification';
 
 var notif = new NotifService;
 

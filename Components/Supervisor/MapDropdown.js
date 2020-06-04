@@ -105,7 +105,7 @@ class Item extends React.Component {
        <View>
 
           <Image
-            source={require('../Resources/Test.png')}
+            source={require('C:/Users/minhh/Covid19/Resources/Test.png')}
             style={{ width: 100, height: 100, alignSelf: "center"}}
             resizeMode={"cover"}
             borderRadius={50}

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Alert} from 'react-native';
 import Map from './GoogleMap';
 import firestore from '@react-native-firebase/firestore';
-import NotifService from './Notification';
+import NotifService from '../Notification';
 import AddSuspected from './AddSuspected';
 
 var notif = new NotifService;

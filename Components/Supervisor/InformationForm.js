@@ -14,6 +14,7 @@ import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from "react-native-geolocation-service"
 import Map from './GoogleMap';
+import CityAndProvinceList from '../CityAndProvinceList'
 
 export default class InformationForm extends React.Component {
     state = {
@@ -29,335 +30,7 @@ export default class InformationForm extends React.Component {
         originalLat: '',
         originalLong: '',
 
-        cityList: [
-            "Thành phố",
-            "Hà Nội",
-        ],
 
-        districtList: [
-            "Quận",
-            "Ba Đình",
-            "Hoàn Kiếm",
-            "Tây Hồ",
-            "Long Biên",
-            "Cầu Giấy",
-            "Đống Đa",
-            "Hai Bà Trưng",
-            "Hoàng Mai",
-            "Thanh Xuân",
-            "Sóc Sơn",
-            "Đông Anh",
-            "Gia Lâm",
-            "Nam Từ Liêm",
-            "Thanh Trì",
-            "Bắc Từ Liêm",
-            "Mê Linh",
-            "Hà Đông",
-        ],
-
-        baDinhProvince: [
-            "Cống Vị",
-            "Điện Biên",
-            "Đội Cấn",
-            "Giảng Võ",
-            "Kim Mã",
-            "Liễu Giai",
-            "Ngọc Hà",
-            "Ngọc Khánh",
-            "Nguyễn Trung Trực",
-            "Phúc Xá",
-            "Quán Thánh",
-            "Thành Công",
-            "Trúc Bạch",
-            "Vĩnh Phúc",
-        ],
-
-        hoanKiemProvince: [
-            "Chương Dương",
-            "Cửa Đông",
-            "Cửa Nam",
-            "Đồng Xuân",
-            "Hàng Bạc",
-            "Hàng Bài",
-            "Hàng Bồ",
-            "Hàng Bông",
-            "Hàng Buồm",
-            "Hàng Đào",
-            "Hàng Gai",
-            "Hàng Mã",
-            "Hàng Trống",
-            "Lý Thái Tổ",
-            "Phan Chu Trinh",
-            "Phúc Tân",
-            "Tràng Tiền",
-            "Trần Hưng Đạo",
-        ],
-
-        tayHoProvince: [
-            "Bưởi",
-            "Nhật Tân",
-            "Phú Thượng",
-            "Quảng An",
-            "Thụy Khuê",
-            "Tứ Liên",
-            "Xuân La",
-            "Yên Phụ",
-        ],
-
-        longBienProvince: [
-            "Bồ Đề",
-            "Cự Khối",
-            "Đức Giang",
-            "Gia Thụy",
-            "Giang Biên",
-            "Long Biên",
-            "Ngọc Lâm",
-            "Ngọc Thụy",
-            "Phúc Đồng",
-            "Phúc Lợi",
-            "Sài Đồng",
-            "Thạch Bàn",
-            "Thượng Thanh",
-            "Việt Hưng",            
-        ],
-
-        cauGiayProvince: [
-            "Dịch Vọng",
-            "Dịch Vọng Hậu",
-            "Mai Dịch",
-            "Nghĩa Đô",
-            "Nghĩa Tân",
-            "Quan Hoa",
-            "Trung Hòa",
-            "Yên Hòa",
-        ],
-
-        dongDaProvince: [
-            "Cát Linh",
-            "Hàng Bột",
-            "Khâm Thiên",
-            "Khương Thượng",
-            "Kim Liên",
-            "Láng Hạ",
-            "Láng Thượng",
-            "Nam Đồng",
-            "Ngã Tư Sở",
-            "Ô Chợ Dừa",
-            "Phương Liên",
-            "Phương Mai",
-            "Quang Trung",
-            "Quốc Tử Giám",
-            "Thịnh Quang",
-            "Thổ Quan",
-            "Trung Liệt",
-            "Trung Phụng",
-            "Trung Tự",
-            "Văn Chương",
-            "Văn Miếu",
-        ],
-
-        haiBaTrungProvince: [
-            "Hạ Đình",
-            "Khương Đình",
-            "Khương Mai",
-            "Khương Trung",
-            "Kim Giang",
-            "Nhân Chính",
-            "Phương Liệt",
-            "Thanh Xuân Bắc",
-            "Thanh Xuân Nam",
-            "Thanh Xuân Trung",
-            "Thượng Đình",
-        ],
-
-        hoangMaiProvince: [
-            "Đại Kim",
-            "Định Công",
-            "Giáp Bát",
-            "Hoàng Liệt",
-            "Hoàng Văn Thụ",
-            "Lĩnh Nam",
-            "Mai Động",
-            "Tân Mai",
-            "Thanh Trì",
-            "Thịnh Liệt",
-            "Trần Phú",
-            "Tương Mai",
-            "Vĩnh Hưng",
-            "Yên Sở",
-        ],
-
-        thanhXuanProvince: [
-            "Hạ Đình",
-            "Khương Đình",
-            "Khương Mai",
-            "Khương Trung",
-            "Kim Giang",
-            "Nhân Chính",
-            "Phương Liệt",
-            "Thanh Xuân Bắc",
-            "Thanh Xuân Nam",
-            "Thanh Xuân Trung",
-            "Thượng Đình",
-        ],
-
-        socSonProvince: [
-            " Bắc Phú",
-            " Bắc Sơn",
-            " Đông Xuân",
-            " Đức Hòa",
-            " Hiền Ninh",
-            " Hồng Kỳ",
-            " Kim Lũ",
-            " Mai Đình",
-            " Minh Phú",
-            " Minh Trí",
-            " Nam Sơn",
-            " Phú Cường",
-            " Phù Linh",
-            " Phù Lỗ",
-            " Phú Minh",
-            " Quang Tiến",
-            " Tân Dân",
-            " Tân Hưng",
-            " Tân Minh",
-            " Thanh Xuân",
-            " Tiên Dược",
-            " Trung Giã",
-            " Việt Long",
-            " Xuân Giang",
-            " Xuân Thu",
-        ],
-
-        dongAnhProvince: [
-            "Bắc Hồng",
-            "Cổ Loa",
-            "Dục Tú",
-            "Đại Mạch",
-            "Đông Hội",
-            "Hải Bối",
-            "Kim Chung",
-            "Kim Nỗ",
-            "Liên Hà",
-            "Mai Lâm",
-            "Nam Hồng",
-            "Nguyên Khê",
-            "Tàm Xá",
-            "Thụy Lâm",
-            "Tiên Dương",
-            "Uy Nỗ",
-            "Vân Hà",
-            "Vân Nội",
-            "Việt Hùng",
-            "Vĩnh Ngọc",
-            "Võng La",
-            "Xuân Canh",
-            "Xuân Nộn",
-        ],
-
-        giaLamProvince: [
-            "Hồng Tiến (Bồ Đề)",
-            "Việt Hưng",
-            "Long Biên",
-            "Ngọc Thụy",
-            "Thượng Thanh",
-            "Tiến Bộ (Gia Thụy)",
-            "Giang Biên",
-            "Phúc Lợi (Hội Xá)",
-            "Trung Thành (Cổ Bi)",
-            "Thạch Bàn",
-            "Quyết Chiến (Phú Thị)",
-            "Quyết Thắng (Kim Sơn)",
-            "Toàn Thắng (Lệ Chi)",
-            "Tân Hưng (Kiêu Kỵ)",
-            "Kim Lan",
-            "Quang Minh (Bát Tràng)",
-            "Thừa Thiên (Đông Dư)",
-            "Cự Khối",
-            "Quang Trung I (Trâu Quỳ)",
-            "Quang Trung II (Yên Thường)",
-            "Quyết Tiến (Đặng Xá)",
-            "Văn Đức",
-            "Phù Đổng",
-            "Trung Hưng (Trung Màu)",
-            "Tiền Phong (Yên Viên)",
-            "Đình Xuyên", 
-            "Dương Hà",
-            "Ninh Hiệp",
-            "Đức Thắng (Dương Xá)",
-            "Chiến Thắng (Dương Quang)",
-            "Đại Hưng (Đa Tốn)",
-        ],
-
-        namTuLiemProvince: [
-            "Cầu Diễn",
-            "Đại Mỗ",
-            "Mễ Trì",
-            "Mỹ Đình 1",
-            "Mỹ Đình 2",
-            "Phú Đô",
-            "Phương Canh",
-            "Tây Mỗ",
-            "Trung Văn",
-            "Xuân Phương",
-        ],
-
-        bacTuLiemProvince: [
-            "Cổ Nhuế 1",
-            "Cổ Nhuế 2",
-            "Đông Ngạc",
-            "Đức Thắng",
-            "Liên Mạc",
-            "Minh Khai",
-            "Phú Diễn",
-            "Phúc Diễn",
-            "Tây Tựu",
-            "Thụy Phương",
-            "Thượng Cát",
-            "Xuân Đỉnh",
-            "Xuân Tảo",
-        ],
-
-        meLinhProvince: [
-            "Chi Đông",
-            "Chu Phan",
-            "Đại Thịnh",
-            "Hoàng Kim",
-            "Kim Hoa",
-            "Liên Mạc",
-            "Mê Linh",
-            "Quang Minh",
-            "Tam Đồng",
-            "Thạch Đà",
-            "Thanh Lâm",
-            "Tiền Phong",
-            "Tiến Thắng",
-            "Tiến Thịnh",
-            "Tráng Việt",
-            "Tự Lập",
-            "Vạn Yên",
-            "Văn Khê",
-        ],
-
-        haDongProvince: [
-            "Biên Giang",
-            "Dương Nội",
-            "Đồng Mai",
-            "Hà Cầu",
-            "Kiến Hưng",
-            "La Khê",
-            "Mộ Lao",
-            "Nguyễn Trãi",
-            "Phú La",
-            "Phú Lãm",
-            "Phú Lương",
-            "Phúc La",
-            "Quang Trung",
-            "Vạn Phúc",
-            "Văn Quán",
-            "Yên Nghĩa",
-            "Yết Kiêu",
-        ],
     }
 
     componentDidMount() {
@@ -408,13 +81,13 @@ export default class InformationForm extends React.Component {
 
         firestore()
         .collection("Hà Nội")
-        .doc(this.state.districtList[this.state.district])
+        .doc(CityAndProvinceList.getDistrict()[this.state.district])
         .collection(this.state.chosenProvince[this.state.province])
         .doc("Supervisor")
         .set({
             Name: this.state.name,
             CMND: this.state.id,
-            District: this.state.districtList[this.state.district],
+            District: CityAndProvinceList.getDistrict()[this.state.district],
             Province: this.state.chosenProvince[this.state.province],
             Phone: this.state.phone,
         })
@@ -425,7 +98,7 @@ export default class InformationForm extends React.Component {
         });
 
         const firstPair = ["ID", this.state.name]
-        const secondPair = ["District", this.state.districtList[this.state.district]]
+        const secondPair = ["District", CityAndProvinceList.getDistrict()[this.state.district]]
         const thirdPair = ["Province", this.state.chosenProvince[this.state.province]]
         const forthPair = ["OriginalLatitude", this.state.originalLat]
         const fifthPair = ["OriginalLongtitude", this.state.originalLong]
@@ -440,7 +113,7 @@ export default class InformationForm extends React.Component {
         if(this.state.page == 'Map')
         {   
             return(<Map
-                district={this.state.districtList[this.state.district]}
+                district={CityAndProvinceList.getDistrict()[this.state.district]}
                 province={this.state.chosenProvince[this.state.province]}
                 Longtitude={this.state.originalLong}
                 Latitude={this.state.originalLat}
@@ -522,7 +195,7 @@ export default class InformationForm extends React.Component {
                             }
                         }
                     >
-                        {this.state.cityList.map((item, index) => {
+                        {CityAndProvinceList.getCity().map((item, index) => {
                             return (< Picker.Item label={item} value={index} key={index} />);
                         })}
                     </Picker>
@@ -537,52 +210,52 @@ export default class InformationForm extends React.Component {
                                 })
                                 switch(itemValue) {
                                     case 1:
-                                        this.state.chosenProvince = this.state.baDinhProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getBaDinhProvince();
                                         break;
                                     case 2:
-                                        this.state.chosenProvince = this.state.hoanKiemProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getHoanKiemProvince();
                                         break;
                                     case 3:
-                                        this.state.chosenProvince = this.state.tayHoProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getTayHoProvince();
                                         break;
                                     case 4:
-                                        this.state.chosenProvince = this.state.longBienProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getlLongBienProvince();
                                         break;
                                     case 5:
-                                        this.state.chosenProvince = this.state.cauGiayProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getCauGiayProvince();
                                         break;
                                     case 6:
-                                        this.state.chosenProvince = this.state.dongDaProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getDongDaProvince();
                                         break;
                                     case 7:
-                                        this.state.chosenProvince = this.state.haiBaTrungProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getHaiBaTrungProvince();
                                         break;
                                     case 8:
-                                        this.state.chosenProvince = this.state.hoangMaiProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getHoangMaiProvince();
                                         break;
                                     case 9:
-                                        this.state.chosenProvince = this.state.thanhXuanProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getThanhXuanProvince();
                                         break;
                                     case 10:
-                                        this.state.chosenProvince = this.state.socSonProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getSocSonProvince();
                                         break;
                                     case 11:
-                                        this.state.chosenProvince = this.state.dongAnhProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getDongAnhProvince();
                                         break;
                                     case 12:
-                                        this.state.chosenProvince = this.state.giaLamProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getGiaLamProvince();
                                         break;
                                     case 13:
-                                        this.state.chosenProvince = this.state.namTuLiemProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getNamTuLiemProvince();
                                         break;
                                     case 14:
-                                        this.state.chosenProvince = this.state.bacTuLiemProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getBacTuLiemProvince();
                                         break;
                                     case 15:
-                                        this.state.chosenProvince = this.state.meLinhProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getMeLinhProvince();
                                         break;
                                     case 16:
-                                        this.state.chosenProvince = this.state.haDongProvince;
+                                        this.state.chosenProvince = CityAndProvinceList.getHaDongProvince();
                                         break;
                                     default:
                                         //this.state.chosenProvince = ['xin moi chon quan']
@@ -591,7 +264,7 @@ export default class InformationForm extends React.Component {
                             }
                         }
                     >
-                        {this.state.districtList.map((item, index) => {
+                        {CityAndProvinceList.getDistrict().map((item, index) => {
                             return (< Picker.Item label={item} value={index} key={index} />);
                         })}
                     </Picker>

@@ -1,42 +1,38 @@
 import React from "react";
 import {StyleSheet, PermissionsAndroid} from "react-native";
-import LogInInterface from './Components/Login';
-import MainInfo from './Components/MainInfo'
-import GPS from './Components/GPS'
+import LogInInterface from './Components/UserAuthentication/Login';
 import AsyncStorage from '@react-native-community/async-storage';
-import Timer from "./Components/Timer";
-import Map from './Components/GoogleMap'
-import SupervisorUI from './Components/SupervisorUI'
+import Timer from "./Components/Self-Quarantine User/SuspectedUserUI";
+import SupervisorUI from './Components/Supervisor/SupervisorUI'
+import AppJSPullData from './Components/Push&PullData/AppJSPullData'
 
-var name;
-var district;
-var province;
-var originalLat;
-var originalLong;
-var isSupervisor;
+
 
 export default class App extends React.Component {
-
     state= {
         login: false,
+        name : '',
+        district: '',
+        province: '',
+        originalLat: '',
+        originalLong: '',
+        isSupervisor: '',
     }
 
-    loadInfo  = async () => {
-        name = await AsyncStorage.getItem("ID")
-        district = await AsyncStorage.getItem("District")
-        province = await AsyncStorage.getItem("Province")
-        originalLat = await AsyncStorage.getItem("OriginalLatitude")
-        originalLong = await AsyncStorage.getItem("OriginalLongtitude")
-        isSupervisor = await AsyncStorage.getItem("Role")
+    checkLogin(name, district, province, originalLat, originalLong, isSupervisor) {
+        this.setState({
+            login: true,
+            name: name,
+            district : district,
+            province : province,
+            originalLat : originalLat,
+            originalLong : originalLong,
+            isSupervisor : isSupervisor,
+        })
+      
+    }
 
-        if(name != null) {
-            this.setState({
-                login: true,
-            })
-        }
-
-       // await AsyncStorage.clear()
-
+    showGPSDialog  = async () => {
         const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
@@ -51,36 +47,47 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        this.loadInfo();
+        this.showGPSDialog();
     }
 
     render() {
 
         if(this.state.login) {
-            if(isSupervisor == "Supervisor") {
+            console.log("test login");
+            if(this.state.isSupervisor == "Supervisor") {
                 return(<SupervisorUI
-                    district={district}
-                    province={province}
-                    Longtitude={originalLong}
-                    Latitude={originalLat}
+                    district={this.state.district}
+                    province={this.state.province}
+                    Longtitude={this.state.originalLong}
+                    Latitude={this.state.originalLat}
                 />
                 )
             }
             else {
                 return (
                     <Timer
-                        district={district} 
-                        province={province} 
-                        name={name}
-                        originalLat={originalLat}
-                        originalLong={originalLong}
+                        district={this.state.district} 
+                        province={this.state.province} 
+                        name={this.state.name}
+                        originalLat={this.state.originalLat}
+                        originalLong={this.state.originalLong}
                     />
                 )
             }
         }
 
         return (
-            <LogInInterface/>
+            <AppJSPullData 
+                checkLogin={this.checkLogin.bind(this)}
+                name = {this.state.name}
+                district = {this.state.district}
+                province = {this.state.province}
+                originalLat = {this.state.originalLat}
+                originalLong = {this.state.originalLong}
+                isSupervisor = {this.state.isSupervisor}
+            />,
+            <LogInInterface />
+            
         );
         //return <TestNoti/>
     }

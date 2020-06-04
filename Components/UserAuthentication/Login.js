@@ -1,64 +1,54 @@
 import React, { Component } from 'react'
 import { ImageBackground, View, Text, TouchableOpacity, TextInput, StyleSheet ,Alert } from 'react-native'
-import firestore from '@react-native-firebase/firestore'
-import InformationForm from './InformationForm';
+import InformationForm from '../Supervisor/InformationForm';
+import Timer from '../Self-Quarantine User/SuspectedUserUI'
+import LoginJSReadData from '../Push&PullData/LoginJSReadData'
 
 export default class LogInInterface extends Component {
 
     state= {
         page: 'logIn',
-        PIN: ''
+        PIN: '',
     };
 
-
-    logIn(){
-        firestore().collection("Supervisor").doc(this.state.PIN)
-        .get().then (doc => {
-            if(doc.exists) {
-                this.setState({
-                page: 'supervisorUI'
-                })
-            }
-            else
-            {
-                firestore().collection("SuspectedUser").doc(this.state.PIN)
-                .get().then (doc => {
-                    if(doc.exists) {
-                        this.setState({
-                            page: 'userInterface'
-                        })
-                    }
-                    else{
-                        Alert.alert("Bạn nhập sai mã PIN")
-                    }
-                })
-            }
+    checkPIN() {
+        this.setState({
+            page: 'authenticate',
         })
     }
 
+    changePage(page) {
+        this.setState({
+            page: page,
+        })
+    }
 
    render(){
 
-    if ( this.state.page == 'userInterface' )
-    {
+    if ( this.state.page == 'userInterface' ) {
         return( 
            <Timer 
-                district={district} 
-                province={province} 
-                name={this.state.name}
-                originalLat={this.state.originalLat}
-                originalLong={this.state.originalLong}
-                />
+                // district={district} 
+                // province={province} 
+                // name={this.state.name}
+                // originalLat={this.state.originalLat}
+                // originalLong={this.state.originalLong}
+                district={"Tây Hồ"} 
+                province={"Bưởi"} 
+                name={"An"}
+                originalLat={"21.0682717"}
+                originalLong={"105.8103067"}
+            />
             )
     }
-    else if (this.state.page == 'supervisorUI')
-    {
+    else if (this.state.page == 'supervisorUI') {
         return(<InformationForm/>)
     }   
 
-    return (
+    else if (this.state.page == 'logIn') {
+        return (
         <View style = {styles.view}  >
-            <ImageBackground source={require('../Resources/Background.jpg')} style={styles.image}>
+            <ImageBackground source={require('C:/Users/minhh/Covid19/Resources/Background.jpg')} style={styles.image}>
                 <Text style = {styles.text}>
                     Covid19-Tracker
                 </Text>
@@ -69,13 +59,24 @@ export default class LogInInterface extends Component {
                 onChangeText ={text => this.setState({
                     PIN: text,
                 })}/>
-                <TouchableOpacity style = {styles.logIn} onPress = {() => this.logIn()}>
+                <TouchableOpacity style = {styles.logIn} onPress = {() => this.checkPIN()}>
                     <Text style={styles.logInText}>Đăng nhập</Text>
                 </TouchableOpacity>
+               
             </ImageBackground>
         </View>
-     )
+        )
    }
+
+    else {
+        return(
+            <LoginJSReadData
+                PIN={this.state.PIN}
+                changePage={this.changePage.bind(this)}
+            />
+        )
+    }
+    }
 }
 
 const styles = StyleSheet.create({
