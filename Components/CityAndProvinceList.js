@@ -380,17 +380,26 @@ import { View } from 'react-native';
     ];
     
     var haiBaTrungProvince = [
-        "Hạ Đình",
-        "Khương Đình",
-        "Khương Mai",
-        "Khương Trung",
-        "Kim Giang",
-        "Nhân Chính",
-        "Phương Liệt",
-        "Thanh Xuân Bắc",
-        "Thanh Xuân Nam",
-        "Thanh Xuân Trung",
-        "Thượng Đình",
+        "Bạch Mai" , 
+        "Bạch Đằng" , 
+        "Bách Khoa" , 
+        "Bùi Thị Xuân",
+        "Cầu Dền" , 
+        "Đống Mác" ,
+        "Đồng Nhân" , 
+        "Đồng Tâm" ,
+        "Lê Đại Hành" , 
+        "Minh Khai" , 
+        "Ngô Thì Nhậm" , 
+        "Nguyễn Du" , 
+        "Phạm Đình Hổ" , 
+        "Phố Huế" , 
+        "Quỳnh Lôi" , 
+        "Quỳnh Mai" , 
+        "Thanh Lương" , 
+        "Thanh Nhàn" ,
+        "Trương Định" , 
+        "Vĩnh Tuy" , 
     ];
     
     var hoangMaiProvince = [
@@ -620,7 +629,7 @@ export default class CityAndProvinceList extends Component {
         return dongDaProvince;
     }
 
-    static getHaBaTrungProvince() {
+    static getHaiBaTrungProvince() {
         return haiBaTrungProvince;
     }
     
