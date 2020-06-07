@@ -6,7 +6,8 @@ import {
     StyleSheet,
     Alert,
     Image,
-    ImageBackground
+    ImageBackground,
+    TouchableOpacity
 }
 from 'react-native';
 
@@ -15,6 +16,7 @@ import moment from 'moment';
 import GPS from './GPS'
 import CallSuperVisor from './CallSupervisor';
 import SuspectedPullData from '../Push&PullData/SuspectedPullData'
+import CallSuspected from '../Supervisor/CallSuspected';
 
 export default class Timer extends React.Component {
 
@@ -94,17 +96,21 @@ export default class Timer extends React.Component {
                     digitTxtStyle={{color: '#FFF'}}
                     timeLabels={{d: 'Ngày', h: 'Giờ', m: 'Phút', s: 'Giây'}}
               />
-              <Image 
-                source={require('../Resources/Countdown.gif')}
-                style={{
-                  aspectRatio: 0.75, 
-                  resizeMode: 'contain',
-                  alignSelf: "center",
-                }}
-              />
+              <TouchableOpacity
+                onPress={CallSuperVisor.makeCall}
+              >
+                <Image 
+                  source={require('../Resources/Countdown.gif')}
+                  style={{
+                    aspectRatio: 0.75, 
+                    resizeMode: 'contain',
+                    alignSelf: "center",
+                  }}
+                />
+              </TouchableOpacity>
               <CallSuperVisor
-              district = {this.state.district}
-              province = {this.state.province}
+                district = {this.state.district}
+                province = {this.state.province}
               />
             </ImageBackground>
           </View>

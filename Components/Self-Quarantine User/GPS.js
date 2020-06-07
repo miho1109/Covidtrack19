@@ -98,7 +98,8 @@ export default class GPS extends React.Component {
 
 
     checkLocation(){
-        
+        // console.log(this.state.originalLat, this.state.originalLong);
+        // console.log(this.state.Lat, this.state.Long);
         if(this.state.originalLat != 0 && this.state.originalLong != 0) {
             var R = 6371000; // metres
             var φ1 = this.state.Lat* Math.PI / 180;
@@ -115,7 +116,7 @@ export default class GPS extends React.Component {
                 distanceFromHome: R * c
             })
             
-            console.log("Distance From Home: ", this.state.distanceFromHome);
+            //console.log("Distance From Home: ", this.state.distanceFromHome);
         }
 
         if(this.state.distanceFromHome > 10){

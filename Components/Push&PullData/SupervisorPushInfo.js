@@ -24,7 +24,9 @@ export default class SupervisorPushInfo extends Component {
         const secondPair = ["District", District]
         const thirdPair = ["Province", Province]
         const forthPair = ["Role", "Supervisor"]
-        AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair])
+        const fifthPair = ["Latitude", Latitude]
+        const sixthPair = ["Longtitude", Longtitude]
+        AsyncStorage.multiSet([firstPair, secondPair, thirdPair, forthPair, fifthPair, sixthPair])
 
         console.log("Lưu thông tin người dùng thành công.")
     }

@@ -10,7 +10,7 @@ import {
 }
 from 'react-native';
 
-import InfoTitle from '../Supervisor/informationTitle';
+import InfoTitle from '../Supervisor/InformationTitle';
 
 export default class AddSuspected extends React.Component {
     state = {
@@ -68,8 +68,8 @@ export default class AddSuspected extends React.Component {
       top: 0,
       justifyContent: 'center',
       alignItems: 'center',
-        paddingTop:30,
-        paddingLeft:350,
+      top:30,
+      right: 40,
     },
     touchableButton: {
       width: '280%',

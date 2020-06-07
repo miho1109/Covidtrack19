@@ -6,10 +6,18 @@ import LoginJSReadData from '../Push&PullData/LoginJSReadData'
 
 export default class LogInInterface extends Component {
 
-    state= {
-        page: 'logIn',
-        PIN: '',
-    };
+    constructor(props) {
+        super(props);
+        this.state= {
+            page: 'logIn',
+            PIN: '',
+            originalLat: '',
+            originalLong: '',
+            district: '',
+            province: '',
+            id: '',
+        };
+    }
 
     checkPIN() {
         this.setState({
@@ -17,27 +25,27 @@ export default class LogInInterface extends Component {
         })
     }
 
-    changePage(page) {
+    changePage(page, ID, district, province, Lat, Long) {
         this.setState({
             page: page,
+            id: ID,
+            district: district,
+            province: province,
+            originalLong: Long,
+            originalLat: Lat,
         })
     }
 
-   render(){
+    render(){
 
     if ( this.state.page == 'userInterface' ) {
         return( 
            <Timer 
-                // district={district} 
-                // province={province} 
-                // name={this.state.name}
-                // originalLat={this.state.originalLat}
-                // originalLong={this.state.originalLong}
-                district={"Tây Hồ"} 
-                province={"Bưởi"} 
-                name={"An"}
-                originalLat={"21.0682717"}
-                originalLong={"105.8103067"}
+                district={this.state.district} 
+                province={this.state.province} 
+                name={this.state.id}
+                originalLat={this.state.originalLat}
+                originalLong={this.state.originalLong}
             />
             )
     }

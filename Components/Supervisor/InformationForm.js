@@ -79,7 +79,8 @@ export default class InformationForm extends React.Component {
     saveInfo() {
         SupervisorPushInfo.saveInfo(this.state.phone, this.state.name, this.state.id,
                                     CityAndProvinceList.getDistrict()[this.state.district],
-                                    this.state.chosenProvince[this.state.province]
+                                    this.state.chosenProvince[this.state.province],
+                                    this.state.originalLat, this.state.originalLong
                                     );
         this.setState({
             page: 'Map'

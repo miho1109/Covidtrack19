@@ -4,8 +4,6 @@ import LogInInterface from './Components/UserAuthentication/Login';
 import Timer from "./Components/Self-Quarantine User/SuspectedUserUI";
 import SupervisorUI from './Components/Supervisor/SupervisorUI'
 import AppJSPullData from './Components/Push&PullData/AppJSPullData'
-import Geolocation from 'react-native-geolocation-service'
-
 
 export default class App extends React.Component {
     state= {
@@ -24,6 +22,8 @@ export default class App extends React.Component {
             name: name,
             district : district,
             province : province,
+            originalLat: originalLat,
+            originalLong: originalLong,
             isSupervisor : isSupervisor,
         })
     }
@@ -44,22 +44,7 @@ export default class App extends React.Component {
 
     componentDidMount() {
         this.showGPSDialog();
-        this.getOriginalLocaion();
-    }
-
-    getOriginalLocaion(){
-        Geolocation.getCurrentPosition(
-            (position) => {
-                this.setState({
-                    originalLong: position.coords.longitude,
-                    originalLat: position.coords.latitude,
-                })
-            },
-            (error) => {
-                console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: true, forceRequestLocation: true}
-        );
+        
     }
 
     render() {
@@ -67,12 +52,12 @@ export default class App extends React.Component {
         if(this.state.login) {
             if(this.state.isSupervisor == "Supervisor") {
                 return(
-                <SupervisorUI
-                    district={this.state.district}
-                    province={this.state.province}
-                    Longtitude={this.state.originalLong}
-                    Latitude={this.state.originalLat}
-                />
+                    <SupervisorUI
+                        district={this.state.district}
+                        province={this.state.province}
+                        Longtitude={this.state.originalLong}
+                        Latitude={this.state.originalLat}
+                    />
                 )
             }
             else {
@@ -91,12 +76,9 @@ export default class App extends React.Component {
         else return (
             <View style={{flex: 1}}>
                 <LogInInterface />
+                
                 <AppJSPullData 
                     checkLogin={this.checkLogin.bind(this)}
-                    name = {this.state.name}
-                    district = {this.state.district}
-                    province = {this.state.province}
-                    isSupervisor = {this.state.isSupervisor}
                 />  
             </View>
         );

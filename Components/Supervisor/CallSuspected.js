@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, Linking, Platform, TouchableOpacity } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
+
 var suspectedPhone = 0;
 export default class CallSuspected extends Component {
     constructor(props) {
