@@ -16,7 +16,6 @@ export default class LoginJSReadData extends Component {
     
     componentDidMount() {
         this.logIn();
-        this.getOriginalLocaion();
     }
 
     logIn(){
@@ -25,7 +24,7 @@ export default class LoginJSReadData extends Component {
         }
         
         else {
-
+        this.getOriginalLocaion();
         var documentFound = false;
             firestore()
             .collection("PIN")
@@ -50,6 +49,7 @@ export default class LoginJSReadData extends Component {
     } 
 
     saveToASync(ID, District, Province) {
+        AsyncStorage.clear();
         const firstPair = ["ID", ID]
         const secondPair = ["District", District]
         const thirdPair = ["Province",Province]
@@ -70,6 +70,7 @@ export default class LoginJSReadData extends Component {
             (error) => {
                 console.log(error.code, error.message);
             },
+            { enableHighAccuracy: true, forceRequestLocation: true}
         );
     }
 

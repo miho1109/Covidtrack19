@@ -20,6 +20,7 @@ export default class SupervisorPushInfo extends Component {
             Phone: Phone
         })
 
+        AsyncStorage.clear();
         const firstPair = ["ID", Name]
         const secondPair = ["District", District]
         const thirdPair = ["Province", Province]

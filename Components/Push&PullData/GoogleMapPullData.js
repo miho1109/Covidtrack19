@@ -39,8 +39,10 @@ export default class GoogleMapPullData extends Component {
             snapshot.forEach(doc => {
               //console.log(doc.id, '=>', doc.data());
               quarantineList.push(doc.data());
-              var temp = new Point(Number(doc.data().Latitude), Number(doc.data().Longtitude))
-              coordinateList.push(temp);
+              if(doc.data().Latitude != 0 && doc.data().Longtitude != 0) {
+                var temp = new Point(Number(doc.data().Latitude), Number(doc.data().Longtitude))
+                coordinateList.push(temp);
+              }
               sortPoints(coordinateList)
               //console.log(coordinateList);
             });

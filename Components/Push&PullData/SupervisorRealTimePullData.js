@@ -46,7 +46,7 @@ export default class SupervisorRealTimePullData extends React.Component {
     }
     
     createNotification(Name, CMND, QuarantineLocation) {
-        var info = Name + " vừa xổng chuồng";
+        var info = Name + " vừa rời khỏi khu cách ly";
         var info_BigText = "Tên: " + Name + "\n" + "Số CMND: "  + CMND + "\n" + "Địa chỉ: " + QuarantineLocation;
         notif = new NotifService (
             this.onRegister.bind(this),

@@ -417,6 +417,7 @@ import { View } from 'react-native';
         "Tương Mai",
         "Vĩnh Hưng",
         "Yên Sở",
+        "Khu nhà ở học sinh - sinh viên Pháp Vân - Tứ Hiệp",
     ];
     
     var thanhXuanProvince = [
@@ -532,6 +533,8 @@ import { View } from 'react-native';
         "Tây Mỗ",
         "Trung Văn",
         "Xuân Phương",
+        "Khu nhà ở sinh viên Mỹ Đình II",
+        "Khu cách ly tập trung tại trường Cao đẳng nghề Công nghệ cao Hà Nội",
     ];
     
     var bacTuLiemProvince = [

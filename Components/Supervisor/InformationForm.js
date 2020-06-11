@@ -199,7 +199,7 @@ export default class InformationForm extends React.Component {
                                         this.state.chosenProvince = CityAndProvinceList.getTayHoProvince();
                                         break;
                                     case 4:
-                                        this.state.chosenProvince = CityAndProvinceList.getlLongBienProvince();
+                                        this.state.chosenProvince = CityAndProvinceList.getLongBienProvince();
                                         break;
                                     case 5:
                                         this.state.chosenProvince = CityAndProvinceList.getCauGiayProvince();

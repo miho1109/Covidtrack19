@@ -4,7 +4,6 @@ import firestore from '@react-native-firebase/firestore';
 export default class SuspectedPushInfo extends Component {
 
     static saveInfo(Phone, Name, CMND, Insurance, DateOfBirth, Gender, Region, District, Province, QuarantineLocation, Email, CurrentDate, Longtitude, Latitude) {
-        
         firestore()
         .collection("Hà Nội")
         .doc(District)
@@ -41,7 +40,7 @@ export default class SuspectedPushInfo extends Component {
         })
         
         console.log("Lưu thông tin người dùng thành công.")
-    }
+}
 
     render() {
         return (
