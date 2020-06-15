@@ -42,6 +42,7 @@ export default class LoginJSReadData extends Component {
 
                 if(documentFound == false) {
                     Alert.alert("Bạn nhập sai mã PIN");
+                    this.props.changePage('logIn', ' ', ' ', ' ',' ', ' ');
                 }
             })
         }
